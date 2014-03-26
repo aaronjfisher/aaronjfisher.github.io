@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bio KenIngle.com</title>
+
+    <link rel="stylesheet" href="/theme/css/main.css">
+    <link rel="stylesheet" href="/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="/">Aaron Fisher </a>
+          TEST some text for a while blah blah balh!
+        </div>
+        <div class="sub-title"></div>
+
+<p>
+    <div class="view"><a href="/pages/bio.html">Bio</a></div>
+    <div class="view"><a href="/pages/contact.html">contact</a></div>
+    <div class="view"><a href="/pages/research.html">Research</a></div>
+  <div class="view"><a href="/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+<div class="social">
+<h4>Follow Me</h4>
+<ul>
+    <li><a href="https://github.com/aaronjfisher">aaronjfisher</a></li>
+    <li><a href="https://twitter.com/PrfFarnsworth">@PrfFarnsworth</a></li>
+</ul>
+</div>
+
+      </header>
+      <section>
+<section id="content" class="body">    
+	test header! images!<!-- Can put some header stuff just for the pages here -->
+    <h1 class="entry-title">Bio</h1>
+    
+    <!-- Added text here will go under the title, before the body -->
+    <p>(This website is under construction)</p>
+<p>I am a third year PhD Student in the Biostatistics department at the Johns Hopkins Bloomberg School of Public Health, under the advisement of Vadim Zipunnikov and Brian Caffo. My primary research is top secret. There’s probably no way I’m telling you what it’s about.</p>
+<p>In general though, my research interests include high dimensional inference, neuroimaging analysis, wearable health monitors, adaptive clinical trials, and the design of intuitive graphics.</p>
+<p>In my spare time, I also enjoy taking short bike rides, swing dancing, and cooking related projects that involve lots of test batches.</p>
+    <!-- added stuff here will go under the text. can also add after section -->
+</section>
+      </section>
+      <footer>
+        <p><small>&copy; Aaron Fisher &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    where is this textr?
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+  </body>
+  how about this text?
+</html>
