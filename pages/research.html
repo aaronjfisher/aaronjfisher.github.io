@@ -19,14 +19,17 @@
 	    <div class="feeds">
 	    </div>
 	      <div class="pages">
-			  <a href="/pages/about.html">About</a>
+			  <a href="/">About</a>
 -			  <a href="/pages/cv.html">CV</a>
 -			  <a href="/pages/research.html">Research</a>
 -			  <a href="/pages/resources.html">Resources</a>
-			<a href="/archives.html"> Archives </a><!--  AF Added -->
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="/blog.html">Blog</a>
+			<!-- <a href="/archives.html"> Archives </a> -->
 
 	      </div>
-		<a href="" class="title">Aaron Fisher</a>
+		<a href="/index.html" class="title">Aaron Fisher</a>
       </header>
 	
 	  <div class="wrapper">
@@ -34,13 +37,13 @@
 		  <div role="main" class="content">
 
 <h1>Research</h1>
-<h2>interAdapt Software for planning adaptive clinical trials</h2>
+<h2><em>interAdapt</em> software for planning adaptive clinical trials</h2>
 <p>When designing a clinical trial, study coordinators often have prior evidence that the treatment might work better in a one subpopulation than another. One strategy in these scenarios is to conduct a trial with an adaptive enrollment criteria, where we decide whether or not to continue enrolling patients from each subpopulation based on interim analyses of whether each subpopulation is benefiting. In order for the type I error and the power of the trial to be calculable, the decision rules for changing enrollment must be set before the trial starts.</p>
 <p><em>interAdapt</em> is a tool for generating pre-determined decision rules for trials with adaptive enrollement criteria. Using this application, you can also compare the performance of the resulting adaptive trial designs to the performance of standard designs with fixed enrollment criteria. Performance is compared in terms of power, expected sample size, and expected trial duration.</p>
 <p><a href="http://spark.rstudio.com/mrosenblum/interAdapt">Shiny app link</a></p>
 <p><a href="http://biostats.bepress.com/jhubiostat/paper262/">Documentation</a></p>
-<p><br/><br/></p>
-<h2>Improve computational efficiency for bootstrap principal component analysis  (PCA) in high dimensions</h2>
+<p><br/></p>
+<h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
 <p><em>Coming soon…</em></p>
 <p><br/></p>		
 
@@ -66,8 +69,8 @@
 				  <li>Office#: E3032<i></i></li>
 				  <li>afishe27 at jhu.edu<i></i></li> -->
 			    <!-- </ul> -->	
-    			  <a href="http://www.jhsph.edu/people/">Johns Hopkins Bloomberg School of Public Health</a><br/>
-    			  <a href="http://www.biostat.jhsph.edu/people/">Dept of Biostatistics</a><br/>
+    			  <a href="http://www.jhsph.edu">Johns Hopkins Bloomberg School of Public Health</a><br/>
+    			  <a href="http://www.biostat.jhsph.edu">Dept of Biostatistics</a><br/>
 				  615 N. Wolfe Street<br/>
 				  Baltimore, MD 21205<br/>
 				  <br/>
@@ -86,7 +89,8 @@
 	          <div class="widget blogroll">
 	            <h2>Links</h2>
 	            <ul>
-	                <li><a href="http://http://bmorebiostat.com/">BmoreBiostat</a></li>
+	                <li><a href="http://bmorebiostat.com/">BmoreBiostat</a></li>
+	                <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
 	                <li><a href="http://www.jhsph.edu/departments/biostatistics/">JHU Biostatistics</a></li>
 	            </ul>
 	          </div>
@@ -97,7 +101,7 @@
 
       <footer>
 		<p role="contentinfo">
-		  © 2013 Aaron Fisher - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+		  Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
     	</p>
 
 	  </footer>	
