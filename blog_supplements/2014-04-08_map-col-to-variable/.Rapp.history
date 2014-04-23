@@ -1,0 +1,477 @@
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv))
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv,stretch=1.2)
+fast.color.legend<-function(x,y,z,stretch=1,spacing=.05,digits=2,...){#
+	spacex<-diff(range(x))*spacing#
+	addy<-diff(range(y))*(stretch-1)#
+	color.legend(xl=max(x)+spacex, yb=min(y)-addy,xr=max(x)+spacex*2,yt=max(y)+addy,legend=signif(range(z),digits=digits), align='rb',gradient='y',...)#
+}
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv,stretch=1.2)
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv,stretch=1.1)
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv,stretch=1)
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv))
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palQual))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palSeq))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv))
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],rect.col=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],rect.col=palDiv)
+fast.color.legend<-function(x,y,z,stretch=1,spacing=.05,digits=2,col_pal,...){#
+	spacex<-diff(range(x))*spacing#
+	addy<-diff(range(y))*(stretch-1)#
+	col<-mappal(z,col_pal,interp_x=TRUE)#
+	color.legend(xl=max(x)+spacex, yb=min(y)-addy,xr=max(x)+spacex*2,yt=max(y)+addy,legend=signif(range(z),digits=digits), align='rb',gradient='y',col=col,...)#
+}
+' Fast#
+fast.color.legend<-function(x,y,z,stretch=1,spacing=.05,digits=2,col_pal,...){#
+	spacex<-diff(range(x))*spacing#
+	addy<-diff(range(y))*(stretch-1)#
+	col<-mappal(z,col_pal,interp_x=TRUE)#
+	color.legend(xl=max(x)+spacex, yb=min(y)-addy,xr=max(x)+spacex*2,yt=max(y)+addy,legend=signif(range(z),digits=digits), align='rb',gradient='y',rect.col=col,...)#
+}
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv))
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],rect.col=palDiv)
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],pal_vec=palDiv)
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palQual))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palSeq))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv))
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+?par
+par(mfrow=c(1,3),mar=c(5, 4, 4, 3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(5, 3, 4, 3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(5, 3, 4, 3))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(5, 3, 5, 3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(5, 3, 4, 4))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(5, 3, 1.5, 4))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(4, 3.5, 2.5, 4))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,3),mar=c(4, 4, 2.5, 4))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,1],palDiv),main='X[,1] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,1],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+par(mfrow=c(1,2),mar=c(4, 4, 2.5, 4))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='X[,2] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],col_pal=palDiv)#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main='X[,3] mapped to color')#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],col_pal=palDiv)
+?color.legend
+ppMat <- function (n,r=4) {#
+ x <- seq(-r*pi, r*pi, len=n)#
+ mat<-matrix(NA,n,n)#
+ for(i in 1:n){#
+ 	for(j in 1:n){#
+ 		r <- sqrt(x[i]^2 + x[j]^2)#
+ 		mat[i,j]<-cos(r^2)*exp(-r/6)#
+ }}#
+ mat#
+}#
+x<-ppMat(100)+.25#
+#
+par(mfrow=c(1,2),mar=c(3,2,3,4))#
+#
+#with mappal()#
+mappedColImage<-mappal(x,palDiv,interp_x=TRUE)#
+image(x,col=mappedColImage,main='With mappal(),\ngray=zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=mappedColImage,  align='rb', gradient='y')
+without mappal()
+image(x,col=palDiv,main='Without mappal(),\nred=zero, gray>zero')
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=palDiv,  align='rb', gradient='y')
+par(mfrow=c(1,2),mar=c(3,2,3,4))#
+#
+#without mappal()#
+image(x,col=palDiv,main='Without mappal(),\nred=zero, gray>zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=palDiv,  align='rb', gradient='y')#
+#
+#with mappal()#
+mappedColImage<-mappal(x,palDiv,interp_x=TRUE)#
+image(x,col=mappedColImage,main='With mappal(),\ngray=zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=mappedColImage,  align='rb', gradient='y')
+with mappal()#
+mappedColImage<-mappal(x,palDiv,interp_x=TRUE)#
+image(x,col=mappedColImage,main='With mappal(),\ngray=zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=mappedColImage,  align='rb', gradient='y')#
+#
+#without mappal()#
+image(x,col=palDiv,main='Without mappal(),\nred=zero, gray>zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=palDiv,  align='rb', gradient='y')
+par(mfrow=c(1,2),mar=c(3,2,3,4))#
+#
+#without mappal()#
+image(x,col=palDiv,main='Without mappal(),\nred=zero, gray>zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=palDiv,  align='rb', gradient='y')#
+#
+#with mappal()#
+mappedColImage<-mappal(x,palDiv,interp_x=TRUE)#
+image(x,col=mappedColImage,main='With mappal(),\ngray=zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=mappedColImage,  align='rb', gradient='y')
+cd /Users/aaronfisher/Documents/JH/Website/pelican_test
+make html #uses the default make file to remake the site
+x<-ppMat(100)+.25#
+#
+par(mfrow=c(1,2),mar=c(3,2,3,4))#
+#
+#without mappal()#
+image(x,col=palDiv,main='Without mappal(),\nred=zero, gray>zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=palDiv,  align='rb', gradient='y')#
+#
+#with mappal()#
+mappedColImage<-mappal(x,palDiv,interp_x=TRUE)#
+image(x,col=mappedColImage,main='With mappal(),\ngray=zero')#
+color.legend(xl=1.02, yb=0,xr=1.07,yt=1,legend=signif(range(x),digits=2), rect.col=mappedColImage,  align='rb', gradient='y')
+mean(c(-.49,1.2))
+cd /Users/aaronfisher/Documents/JH/Website/pelican_test#
+make html #uses the default make file to remake the site#
+cd output && python -m SimpleHTTPServer
+library(devtools)
+?install_github
+load functions#
+library(devtools)#
+#(optional)#
+install_github(repo='ajfisher',user='aaronjfisher')#
+#
+library(ajfisher)
+Figure 1#
+##
+# Scatterplot example#
+# Generate sample data#
+library(MASS)#
+n<-600#
+set.seed(900)#
+Sigma<-matrix(c(#
+    1,0,.5,#
+    0,1,.8,#
+    .5,.8,2), nrow=3)#
+X<-mvrnorm(n,mu=c(0,1.2,0),Sigma=Sigma)#
+# Plot results#
+#
+# Faster code with, fast.color.legend()#
+palDiv<-rev(diverge_hcl(40))#
+par(mfrow=c(1,2),mar=c(4,3,3,3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main=#
+    'Color mapped (redundantly)\nto Y variable',xlab='',ylab='')#
+mtext('X',1,2)#
+mtext('Y',2,2)#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],digits=2,col=mappal(X[,2],#
+    palDiv,interp_x=TRUE))#
+#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],palDiv),main=#
+    'Color mapped to an\nexternal variable (Z)',xlab='',ylab='')#
+mtext('X',1,2)#
+mtext('Y',2,2)#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,3],digits=2,#
+    col=mappal(X[,3], palDiv,interp_x=TRUE))
+cd /Users/aaronfisher/Documents/JH/Website/pelican_test#
+make html #uses the default make file to remake the site#
+cd output && python -m SimpleHTTPServer
+?scales
+library(scales)
+help(package='scales')
+x <- seq(-1, 1, length = 100)#
+r <- sqrt(outer(x^2, x^2, "+"))#
+image(r, col = div_gradient_pal()(seq(0, 1, length = 12)))
+hist(r)
+image(r, col = div_gradient_pal()(seq(0, 1, length = 30)))
+image(r, col = div_gradient_pal()(seq(0, 1, length = 100)))
+image(r, col = div_gradient_pal(low =
+mnsl(complement("10R 4/6", fix = TRUE)))(seq(0, 1, length = 100)))
+library(ajfisher)
+rescale(r,to=c(-1,4))
+r<-r-1
+hist(r)
+r<-r+.6
+hist(r)
+r<-r-.1
+hist(r)
+image0(r)
+image0(r,autoLegend=TRUE)
+par(mar=c(3,3,3,5))
+image0(r,autoLegend=TRUE)
+library(scales)
+library(ajfisher)
+?sequential_hcl
+sequential_hcl
+hex
+?hex
+polarLUV
+?polarLUV
+rescale_max(1:100)
+library(scales)
+rescale_max(1:100)
+rescale_max(runif(50))
+hist(rescale_max(runif(50)))
+rescale_max(1)
+rescale_mid(1:100, mid = 50.5)
+rescale_mid(1:100, mid = 20.5)
+rescale_mid(-100:100, mid = 20.5)
+rescale_mid(-100:100, mid = 0)
+rescale_mid(0:100, mid = 0)
+?sequential_hcl
+rescale_mid(0:100, mid = -3)
+rescale_mid(0:100, mid = -100)
+image(r, col = div_gradient_pal()(seq(-5, 1, length = 12)))
+x <- seq(-1, 1, length = 100)
+r <- sqrt(outer(x^2, x^2, "+"))
+image(r, col = div_gradient_pal()(seq(-5, 1, length = 12)))
+image(r, col = div_gradient_pal()(seq(-5, 4, length = 12)))
+y<-seq(-5, 4, length = 12)
+image(r, col = div_gradient_pal()(rescale_mid(y,0))
+)
+rescale_mid(y,0)
+y
+rescale_mid(y,mid=0)
+image(r, col = div_gradient_pal()(rescale_mid(y,mid=0)))
+y<-seq(-5, 1, length = 12)
+image(r, col = div_gradient_pal()(rescale_mid(y,mid=0)))
+?div_gradient_pal
+n=30
+palDiv
+col_pal<-diverge_hcl(40)
+n=40
+x
+x<-rnorm(100,1)
+x
+hist(x)
+hist(r)
+x<-rnorm(100,1)
+y<-rnorm(100,1)
+col_pal<-diverge_hcl(40)
+n<-length(col_pal)
+range(rescale_mid(x,mid=0))
+cut(x)
+cut(x,breaks=10)
+cut(x,breaks=10)+0
+?scale
+library(scales)
+help(package='scales')
+map_diverge<-function(x,...)#
+	div_gradient_pal(...)(rescale_mid(x,0))#
+x<-rnorm(100)#
+y<-rnorm(100)
+plot(x,y,col=map_diverge(x))
+map_diverge(x)
+map_diverge<-function(x,...)#
+	div_gradient_pal(...)(rescale_mid(x,mid=0))#
+x<-rnorm(100)#
+y<-rnorm(100)#
+plot(x,y,col=map_diverge(x))
+plot(x,y,col=map_diverge(x),pch=19)
+z<-rnorm(100)
+plot(x,y,col=map_diverge(z),pch=19)
+help(package='scales')
+map_diverge<-function(x,max_abs_x=max(abs(x)),...){#
+	div_gradient_pal(...)(rescale_mid(from=c(-1,1)*max_abs_x))#
+}
+x<-rnorm(100)
+y<-rnorm(100)
+z<-rnorm(100)
+plot(x,y,col=map_diverge(z),pch=19)
+map_diverge<-function(x,max_abs_x=max(abs(x)),...){#
+	div_gradient_pal(...)(rescale_mid(x,from=c(-1,1)*max_abs_x))#
+}#
+#
+x<-rnorm(100)#
+y<-rnorm(100)#
+z<-rnorm(100)#
+#
+plot(x,y,col=map_diverge(z),pch=19)
+x<-rnorm(200)
+y<-rnorm(200)
+z<-rnorm(200)
+plot(x,y,col=map_diverge(z),pch=19)
+plot(x,y,col=map_diverge(y),pch=19)
+plot(x,y,col=map_diverge(y,max_abs_x=5),pch=19)
+plot(x,y,col=map_diverge(y,max_abs_x=10),pch=19)
+x<-rnorm(200)
+y<-rnorm(200)+1
+z<-rnorm(200)
+plot(x,y,col=map_diverge(y,max_abs_x=10),pch=19)
+plot(x,y,col=map_diverge(y),pch=19)
+plot(x,y,col=map_diverge(y,max_abs_x=2),pch=19)
+map_diverge(y,max_abs_x=2)
+plot(x,y,col=map_diverge(y,max_abs_x=10),pch=19)
+map_diverge<-function(x,max_abs_x=max(abs(x)),...)#
+	div_gradient_pal(...)(rescale_mid(x,from=c(-1,1)*max_abs_x))
+x<-rnorm(200)#
+y<-rnorm(200)+1#
+z<-rnorm(200)#
+#
+plot(x,y,col=map_diverge(y,max_abs_x=10),pch=19)
+plot(x,y,col=map_diverge(y),pch=19)
+plot(x,y,col=map_diverge(x),pch=19)
+plot(x,y,col=map_diverge(x,low='red'),pch=19)
+plot(x,y,col=map_diverge(x,low='red',high='blue'),pch=19)
+x<-rnorm(600)#
+y<-rnorm(600)+1#
+z<-rnorm(600)#
+#
+plot(x,y,col=map_diverge(x,low='red',high='blue'),pch=19)
+?div_gradient_pal
+setwd("/Users/aaronfisher/Documents/JH/Website/pelican_test/content/blog_supplements/2014-04-08_map-col-to-variable")#
+#####
+# Pick a color palette#
+palDiv<-rev(diverge_hcl(40))#
+#
+###########
+# Figure 1#
+##
+# Scatterplot example#
+# Generate sample data#
+library(MASS)#
+n<-600#
+set.seed(900)#
+Sigma<-matrix(c(#
+	1,0,.5,#
+	0,1,.8,#
+	.5,.8,2), nrow=3)#
+X<-mvrnorm(n,mu=c(0,1.2,0),Sigma=Sigma)
+library(colorspace)
+setwd("/Users/aaronfisher/Documents/JH/Website/pelican_test/content/blog_supplements/2014-04-08_map-col-to-variable")#
+#####
+# Pick a color palette#
+palDiv<-rev(diverge_hcl(40))#
+#
+###########
+# Figure 1#
+##
+# Scatterplot example#
+# Generate sample data#
+library(MASS)#
+n<-600#
+set.seed(900)#
+Sigma<-matrix(c(#
+	1,0,.5,#
+	0,1,.8,#
+	.5,.8,2), nrow=3)#
+X<-mvrnorm(n,mu=c(0,1.2,0),Sigma=Sigma)
+Faster code with, fast.color.legend()#
+par(mfrow=c(1,2),mar=c(4,3,3,3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='Color mapped (redundantly)\nto Y variable',xlab='',ylab='')#
+mtext('X',1,2)#
+mtext('Y',2,2)#
+fast.color.legend(x=X[,1],y=X[,2],z=X[,2],digits=2,col=mappal(X[,2],palDiv,interp_x=TRUE))
+Faster code with, fast.color.legend()#
+par(mfrow=c(1,2),mar=c(4,3,3,3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='Color mapped (redundantly)\nto Y variable',xlab='',ylab='')#
+mtext('X',1,2)#
+mtext('Y',2,2)
+library(ajfisher)
+Faster code with, fast.color.legend()#
+par(mfrow=c(1,2),mar=c(4,3,3,3))#
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='Color mapped (redundantly)\nto Y variable',xlab='',ylab='')#
+mtext('X',1,2)#
+mtext('Y',2,2)
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='Color mapped (redundantly)\nto Y variable',xlab='',ylab='')
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv),main='Color mapped (redundantly)\nto Y variable',xlab='',ylab='')
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2],palDiv))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],palDiv))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(x,y,col=map_diverge(x,low='red',high='blue'),pch=19)
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=map_pal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=map_pal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,3],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,3]))
+plot(X[,1],X[,2],pch=19,col=mappal(X[,2],rev(palDiv)))
+plot(X[,1],X[,2],pch=19,col=map_diverge(X[,2]))
+pal(palDiv)
+pal(map_diverge(-100:100))
+pal(palDiv)
+pal(map_diverge(-40:40))
+par(mfrow=c(1,2))
+pal(palDiv)
+par(mfrow=c(2,1))
+pal(palDiv)
+pal(map_diverge(-40:40))
+par(mfrow=c(2,1),mar=c(1,1,1,1))
+pal(palDiv)
+pal(map_diverge(-40:40))
+par(mfrow=c(2,1),mar=c(1,1,1,1))
+pal(palDiv)
+pal(map_diverge(-20:20))
+par(mfrow=c(2,1),mar=c(1,1,1,1))
+pal(palDiv)
+pal(rev(map_diverge(-20:20)))
+palDiv<-rev(diverge_hcl(60))
+par(mfrow=c(2,1),mar=c(1,1,1,1))
+pal(palDiv)
+pal(rev(map_diverge(-40:40)))
+par(mfrow=c(2,1),mar=c(1,1,1,1))
+pal(palDiv)
+pal(rev(map_diverge(-30:30)))
