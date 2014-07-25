@@ -40,14 +40,36 @@
 		  <div role="main" class="content">
 
 <h1>Research</h1>
+<h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
+<p>Principal Component Analysis (PCA) is a common step in many algorithms applied to high dimensional data, where the number of measurements per subject is much greater than the number of subjects. The fitted principal components (PCs), however, are random test statistics with sampling variability -- if a new sample was recruited, the PCs for the new sample would be different. This sampling variability adds to the sampling variability of any method that uses PCA. It's important to acknowledge this added variability, and to try to estimate it. A bootstrap procedure provides one way to estimate sampling variability of PCs, but this procedure can be computationally demanding.</p>
+<p>To ease this computational burden, we proposed an exact method for calculating PCs in bootstrap samples that is an order of magnitude faster than the standard method. We've applied this method to estimate standard errors of the 3 leading PCs of a brain MRI dataset (≈ 3 million voxels, 352 subjects) based on 1000 bootstrap samples (see below). <em>Computation time was reduced from 4 days to 47 minutes,</em> using a standard laptop.</p>
+<p align="center">
+<img src="../images/2014-05-08_RAVENS_PCA_saggital_fit+se.png" alt="PCs+se" style="width: 66%;"/>
+</p>
+
+<p>The key to improving the speed of the bootstrap procedure is the fact that all sample points are contained within a low-dimensional subspace of the overall, high dimensional sampling space. All bootstrap samples must also lie within the <em>same subspace</em>. If we represent bootstrap samples by their low dimensional coordinates relative to this subspace, we can dramatrically reduce computation times and memory requirements.</p>
+<p>For more:</p>
+<ul>
+<li><a href="http://arxiv.org/abs/1405.0922">Paper on arXiv</a></li>
+<li><a href="../pdfs/2014_jsm_poster_bootSVD.pdf">Poster - JSM 2014</a></li>
+<li><a href="https://github.com/aaronjfisher/bootSVD">bootSVD R package</a> for easy implementation of the bootstrap procedure</li>
+<li><a href="https://github.com/aaronjfisher/ggBrain">ggBrain R package</a> for creating brain image figures</li>
+</ul>
+<p></br></p>
 <h2><em>interAdapt</em> software for planning adaptive clinical trials</h2>
 <p>When designing a clinical trial, study coordinators often have prior evidence that the treatment might work better in a one subpopulation than another. One strategy in these scenarios is to conduct a trial with an adaptive enrollment criteria, where we decide whether or not to continue enrolling patients from each subpopulation based on interim analyses of whether each subpopulation is benefiting. In order for the type I error and the power of the trial to be calculable, the decision rules for changing enrollment must be set before the trial starts.</p>
 <p><em>interAdapt</em> is a tool for generating pre-determined decision rules for trials with adaptive enrollement criteria. Using this application, you can also compare the performance of the resulting adaptive trial designs to the performance of standard designs with fixed enrollment criteria. Performance is compared in terms of power, expected sample size, and expected trial duration.</p>
-<p><a href="http://spark.rstudio.com/mrosenblum/interAdapt">Shiny app link</a></p>
-<p><a href="http://arxiv.org/abs/1404.0734">Documentation</a></p>
+<p></br>
+<p align="center">
+<img src="../images/interAdapt_screenshot.png" alt="interAdapt" style="width: 90%;"/>
+<i>(Screenshot from interAdapt)</i>
+</p></p>
+<p>For more:</p>
+<ul>
+<li><a href="http://spark.rstudio.com/mrosenblum/interAdapt">Shiny app link</a></li>
+<li><a href="http://arxiv.org/abs/1404.0734">Documentation on arXiv</a></li>
+</ul>
 <p><br/></p>
-<h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
-<p><em>Coming soon…</em></p>
 <p><br/></p>		
 
 		  </div>	
