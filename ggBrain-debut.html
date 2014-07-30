@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>ggBrain - An R package for beautiful brain figures - Aaron Fisher</title>	
+	<meta name="author" content="Aaron Fisher">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="http://aaronjfisher.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="http://aaronjfisher.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Aaron Fisher RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
+	  <header role="banner">
+	    <div class="feeds">
+          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
+	      <div class="pages">
+			  <a href="http://aaronjfisher.github.io/">About</a>
+-			  <a href="http://aaronjfisher.github.io/pages/cv.html">CV</a>
+-			  <a href="http://aaronjfisher.github.io/pages/research.html">Research</a>
+-			  <a href="http://aaronjfisher.github.io/pages/resources.html">Resources</a>
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="http://aaronjfisher.github.io/blog.html">Blog</a>
+			<!-- <a href="http://aaronjfisher.github.io/archives.html"> Archives </a> -->
+
+	      </div>
+		<a href="http://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>ggBrain - An R package for beautiful brain figures</h1>
+		
+<div class="metadata">
+  <time datetime="2014-07-30T00:00:00" pubdate>Wed 30 July 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://aaronjfisher.github.io/author/aaron-fisher.html">Aaron Fisher</a>
+    </address>
+  in <a href="http://aaronjfisher.github.io/category/blog.html">blog</a>
+<p class="tags">tagged <a href="http://aaronjfisher.github.io/tag/plots.html">plots</a>, <a href="http://aaronjfisher.github.io/tag/brain-imaging.html">brain imaging</a></p></div>		
+		<p>Check out this lovely brain image figure! I wrote <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">an R package called ggBrain</a> that lets you can generate figures like these with just a couple lines of code!</p>
+<p><img src="blog_supplements/2014-07-24_ggBrain-debut/2014-07-30_RAVENS_PCA_saggital_fitted.png" alt="bootPCAimg" style="width: 100%;"/></p>
+<p>This figure is from my recent <a href="http://arxiv.org/abs/1405.0922" target="_blank">paper on fast, exact methods for bootstrapping high dimensional data (&gt;1 million measurements per subject)</a>. When I was working on figures for the paper, I knew that I wanted to use ggplot, but I ended up being surprised by how much tweaking and planning was needed. To help automate the process, I wrote up an R package called <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain</a>, which transforms brain image arrays into ggplot objects.</p>
+<p>The main step <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain</a> handles is the reshaping of 3-dimensional or 4-dimensional brain image arrays into 2-dimensional, "long" data frames -- the data format required for ggplot. The generated data frames only contain information about the slices to be shown in the final figure. Index variables are included to allow the final figures to contain multiple panels (faceted figures). Panels can contain images from different slices, different time points (in fMRI), or different subjects.</p>
+<p>The package can also automate several aesthetic options, including:</p>
+<ul>
+<li>Tri-planar figures:  For a given voxel, a tri-planar figure shows the sagittal, coronal, and transverse slices that intersect that voxel. These three slices are shown in three panels, and cross-hairs are generated to show the spacial correspondence between the slices (see example below).</li>
+<li>Separete fill scales for template brain images and for overlaying voxel-wise statistics: ggplot2 generally discourages the use of color to display different types of data, on different scales. This makes it hard to use color to show both a brain image template, and to show the value, or sign, of a voxel-wise statistic overlaid on top of that template (see below for an example with seed correlation). The template tissue intensities and the test statistic values are on different scales, which goes against ggplot's method of mapping only one scale to color. In this package, I chose to do the quick fix of hardcoding the coloring of the template image, so that only the voxelwise statistic is formally mapped through ggplot.</li>
+<li>ggplot themes for changing the background to be black, and for removing irrelevant plot labels. </li>
+</ul>
+<h2>Examples</h2>
+<p>The vignette for <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain</a> (see <code>help(package=ggBrain)</code>) contains several code examples with explanation, so I'll just give some very general examples here. They should give you a sense for the small amount of code required for each figure. In these code chunks, <code>dd</code> is a standard ggplot object. Aesthetic changes are added to <code>dd</code> using the usual ggplot syntax.</p>
+<div class="highlight"><pre><span class="c1"># Seed correlation map (stored in the array s_map1)</span>
+<span class="c1"># mar=3 selects the Transverse plane, and mar_ind=30 selects the slice index.</span>
+dd<span class="o">&lt;-</span>ggBrain<span class="p">(</span>template<span class="o">=</span>template<span class="p">,</span>brains<span class="o">=</span>s_map1<span class="p">,</span>mask<span class="o">=</span>mask<span class="p">,</span>mar<span class="o">=</span><span class="m">3</span><span class="p">,</span>
+    mar_ind<span class="o">=</span><span class="m">30</span><span class="p">,</span>type<span class="o">=</span><span class="s">&#39;signed&#39;</span><span class="p">)</span>
+
+dd <span class="o">+</span> labs<span class="p">(</span>title<span class="o">=</span><span class="s">&#39;Seed Correlation Map&#39;</span><span class="p">)</span> <span class="o">+</span>
+    theme_black_bg<span class="p">()</span>
+</pre></div>
+
+
+<p><img alt="alt-text" src="blog_supplements/2014-07-24_ggBrain-debut/seed_map.png" /></p>
+<p>Above, the sign of the correlation is mapped to fill (with a binary scale), and the absolute value of the correlation is mapped to alpha blending (transparency). By default, <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain</a> bins the data in order to combine the legends for alpha blending and for fill.</p>
+<p>It's also possible to fix a constant level of alpha blending across the image, and to map the raw value of the correlation to a diverging color scale. However, I'm not a fan of the white patches in low correlation regions that result from this approach, and tend to prefer the mapping setup used above.</p>
+<p>The image below is an example of a tri-planar figure. Again, for a given voxel, a tri-planar figure shows the sagittal, coronal, and tranvserse slices that intersect that voxel. This tri-planar figure shows the seed region used to calculate the seed correlation map above.</p>
+<div class="highlight"><pre>column_ind <span class="o">=</span> factor<span class="p">(</span>c<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span>labels<span class="o">=</span>c<span class="p">(</span><span class="s">&#39;Sagittal&#39;</span><span class="p">,</span><span class="s">&#39;Coronal&#39;</span><span class="p">,</span><span class="s">&#39;Transverse&#39;</span><span class="p">))</span>
+
+dd<span class="o">&lt;-</span>ggBrain<span class="p">(</span>brains<span class="o">=</span>seed_mask<span class="p">,</span>template<span class="o">=</span>template<span class="p">,</span>mar<span class="o">=</span>c<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span>
+    mar_ind<span class="o">=</span>c<span class="p">(</span><span class="m">37</span><span class="p">,</span><span class="m">18</span><span class="p">,</span><span class="m">30</span><span class="p">),</span>row_ind<span class="o">=</span>c<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">),</span> col_ind<span class="o">=</span>column_ind<span class="p">,</span>
+    type<span class="o">=</span><span class="s">&#39;binary&#39;</span><span class="p">,</span>binary_color<span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">,</span>tri_planar<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span>mask<span class="o">=</span>mask<span class="p">)</span>
+
+dd <span class="o">+</span> labs<span class="p">(</span>alpha<span class="o">=</span><span class="s">&#39;Seed mask&#39;</span><span class="p">)</span> <span class="o">+</span> theme_black_bg<span class="p">()</span>
+</pre></div>
+
+
+<p><img alt="alt-text" src="blog_supplements/2014-07-24_ggBrain-debut/seed_mask_triplane.png" /></p>
+<p>If you're interested, please <a href="https://github.com/aaronjfisher/ggBrain" target="_blank">check out the package!</a></p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+	<div class="comments">
+	<!-- <h2>Comments !</h2> -->
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "ggBrain-debut.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://aaronjfisher.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+<!-- 	        <div class="widget">
+	          <h2>Categories</h2>
+	          <ul>
+	              <li class="active"><a href="http://aaronjfisher.github.io/category/blog.html">blog</a></li>
+	          </ul>
+	        </div>
+ -->
+
+ 			<div>
+	          <h2>Contact</h2>
+			    <!-- <ul class="social"> -->
+	<!-- 			  <li><a href="http://www.biostat.jhsph.edu/people/">Johns Hopkins Bloomberg School of Public Health</a><i></i></li>
+				  <li>615 N. Wolfe Street<i></i></li>
+				  <li>Baltimore, MD 21205<i></i></li>
+				  <br/>
+				  <li>Office#: E3032<i></i></li>
+				  <li>afishe27 at jhu.edu<i></i></li> -->
+			    <!-- </ul> -->	
+    			  <a href="http://www.jhsph.edu">Johns Hopkins Bloomberg School of Public Health</a><br/>
+    			  <a href="http://www.biostat.jhsph.edu">Dept of Biostatistics</a><br/>
+				  615 N. Wolfe Street<br/>
+				  Baltimore, MD 21205<br/>
+				  <br/>
+				  Office #: E3032<br/>
+				  Email: fisher@jhu.edu<br/>
+			  </div>
+
+	          <div class="widget">
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/aaronjfisher">aaronjfisher</a><i></i></li>
+				  <li><a href="https://twitter.com/PrfFarnsworth">@PrfFarnsworth</a><i></i></li>
+			    </ul>
+			  </div>
+
+	          <div class="widget blogroll">
+	            <h2>Links</h2>
+	            <ul>
+	                <li><a href="http://bmorebiostat.com/">BmoreBiostat</a></li>
+	                <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+	                <li><a href="http://www.jhsph.edu/departments/biostatistics/">JHU Biostatistics</a></li>
+	            </ul>
+	          </div>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+            <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
+          Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	  <script>
+		var _gaq=[['_setAccount','UA-49475556-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	  </script>
+
+</body>
+</html>
