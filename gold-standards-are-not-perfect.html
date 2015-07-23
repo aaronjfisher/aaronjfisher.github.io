@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Many statistical "gold standards" aren't perfect, but that's why they're perfectly named - Aaron Fisher</title>	
+	<meta name="author" content="Aaron Fisher">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="http://aaronjfisher.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="http://aaronjfisher.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Aaron Fisher RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
+	  <header role="banner">
+	    <div class="feeds">
+          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
+	      <div class="pages">
+			  <a href="http://aaronjfisher.github.io/">About</a>
+-			  <a href="http://aaronjfisher.github.io/pages/cv.html">CV</a>
+-			  <a href="http://aaronjfisher.github.io/pages/research.html">Research</a>
+-			  <a href="http://aaronjfisher.github.io/pages/resources.html">Resources</a>
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="http://aaronjfisher.github.io/blog.html">Blog</a>
+			<!-- <a href="http://aaronjfisher.github.io/archives.html"> Archives </a> -->
+
+	      </div>
+		<a href="http://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Many statistical "gold standards" aren't perfect, but that's why they're perfectly named</h1>
+		
+<div class="metadata">
+  <time datetime="2015-07-23T00:00:00" pubdate>Thu 23 July 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://aaronjfisher.github.io/author/aaron-fisher.html">Aaron Fisher</a>
+    </address>
+  in <a href="http://aaronjfisher.github.io/category/blog.html">blog</a>
+<p class="tags">tagged <a href="http://aaronjfisher.github.io/tag/language.html">language</a>, <a href="http://aaronjfisher.github.io/tag/benchmarks.html">benchmarks</a>, <a href="http://aaronjfisher.github.io/tag/best-practices.html">best practices</a></p></div>		
+		<p>Statisticians and computer scientists often use the term "gold standard" for the best possible benchmark you could have when trying to estimate something. For example, <a href="https://elizabethmargaretsweeney.wordpress.com/" target="_blank">Elizabeth Sweeney</a> has worked on <a href="http://www.ajnr.org/content/early/2012/07/05/ajnr.A3172.abstract" target="_blank">algorithms</a> for <a href="http://www.sciencedirect.com/science/article/pii/S2213158213000235" target="_blank">tagging brain lesions in MRIs</a>, and compares the results against a gold standard of human neurologists attempting the same task. In clinical trials, randomized clinical trials (RCTs) are sometimes referred to a gold standard approach for estimating a treatment effect because they are more likely to account for unmeasured confounders.</p>
+<p>But in these examples and in others, <a href="http://www.ncbi.nlm.nih.gov/pubmed/11700857" target="_blank">statisticians often question the benchmark's "gold standard" status,</a> saying something the lines of "it's not really a gold standard" because <a href="http://aje.oxfordjournals.org/content/145/2/184.short" target="_blank">it isn't perfect</a>. Imperfect neurologists <a href="http://www.neurology.org/cgi/content/meeting_abstract/78/1_MeetingAbstracts/P03.068" target="_blank">do not always agree with each other</a>, are <a href="http://www.sciencedirect.com/science/article/pii/S2213158213000235" target="_blank">not always even internally consistent</a>.<sup id="fnref:sectionRef"><a class="footnote-ref" href="#fn:sectionRef" rel="footnote">1</a></sup> Randomized trials help to control for unmeasured confounders over repeated trials, but are not guaranteed to do so in any one, specific trial. </p>
+<p><strong><em>My take that the term "gold standard" should still apply though. More-so even, because the actual gold standard of matching currency to gold reserves isn't perfect either.</em></strong><sup id="fnref:counter"><a class="footnote-ref" href="#fn:counter" rel="footnote">2</a></sup> It's a minor point, but a fun one that's sometimes<sup id="fnref:wiki"><a class="footnote-ref" href="#fn:wiki" rel="footnote">3</a></sup> forgotten.</p>
+<p>This post is not meant to be political, but it's fairly well established that the gold standard has both advantages and disadvantages. Tying your currency to gold reserves helps to control inflation, but it also highly restricts your monetary policy. Prices tied to gold tend to be stable in the long run, but <a href="http://krugman.blogs.nytimes.com/2012/08/26/golden-instability/?_r=0" target="_blank">not always stable</a> in the <a href="http://www.theatlantic.com/business/archive/2012/08/why-the-gold-standard-is-the-worlds-worst-economic-idea-in-2-charts/261552/" target="_blank">short run</a>. For most mainstream economists, the connotations of the gold standard <a href="http://blogs.wsj.com/ideas-market/2012/01/23/survey-no-support-for-gold-standard-among-top-economists/" target="_blank">are pretty bad</a>.</p>
+<p>In some ways, gold is just another attempt at a best practice for objective value. Like paper money, it's not inherently valuable, it's only valuable by convention. In much the same way, <strong>when I hear the someone talk about a statistical "gold standard," I like to think of it as a subtle reminder that, for many estimation problems, even the best benchmarks aren't perfect.</strong> 
+<br/></p>
+<p>Special thanks to economists Daniel Garcia Molina and Sohini Mahapatra for their help with this post!</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:sectionRef">
+<p>Within the OASIS paper, section 3.3 discusses within-rater variability, and section 3.4 discusses between-rater variability.&#160;<a class="footnote-backref" href="#fnref:sectionRef" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:counter">
+<p>Of course, one counter argument is that language is defined by modern usage rather than historical meaning, the same reason that we acknowledge how "literally" can informally be used to mean "figuratively".&#160;<a class="footnote-backref" href="#fnref:counter" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:wiki">
+<p>To some extent, this point is raised on the <a href="https://en.wikipedia.org/wiki/Gold_standard_(test)" target="_blank">wikipedia page for a gold standard test</a>.&#160;<a class="footnote-backref" href="#fnref:wiki" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+	<div class="comments">
+	<!-- <h2>Comments !</h2> -->
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "gold-standards-are-not-perfect.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://aaronjfisher.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+<!-- 	        <div class="widget">
+	          <h2>Categories</h2>
+	          <ul>
+	              <li class="active"><a href="http://aaronjfisher.github.io/category/blog.html">blog</a></li>
+	          </ul>
+	        </div>
+ -->
+
+ 			<div>
+	          <h2>Contact</h2>
+			    <!-- <ul class="social"> -->
+	<!-- 			  <li><a href="http://www.biostat.jhsph.edu/people/">Johns Hopkins Bloomberg School of Public Health</a><i></i></li>
+				  <li>615 N. Wolfe Street<i></i></li>
+				  <li>Baltimore, MD 21205<i></i></li>
+				  <br/>
+				  <li>Office#: E3032<i></i></li>
+				  <li>afishe27 at jhu.edu<i></i></li> -->
+			    <!-- </ul> -->	
+    			  <a href="http://www.jhsph.edu">Johns Hopkins Bloomberg School of Public Health</a><br/>
+    			  <a href="http://www.biostat.jhsph.edu">Dept of Biostatistics</a><br/>
+				  615 N. Wolfe Street<br/>
+				  Baltimore, MD 21205<br/>
+				  <br/>
+				  Office #: E3032<br/>
+				  Email: fisher@jhu.edu<br/>
+			  </div>
+
+	          <div class="widget">
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/aaronjfisher">aaronjfisher</a><i></i></li>
+				  <li><a href="https://twitter.com/ajfishr">@ajfishr</a><i></i></li>
+			    </ul>
+			  </div>
+
+	          <div class="widget blogroll">
+	            <h2>Links</h2>
+	            <ul>
+	                <li><a href="http://bmorebiostat.com/">BmoreBiostat</a></li>
+	                <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+	                <li><a href="http://www.jhsph.edu/departments/biostatistics/">JHU Biostatistics</a></li>
+	            </ul>
+	          </div>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+            <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
+          Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	  <script>
+		var _gaq=[['_setAccount','UA-49475556-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	  </script>
+
+</body>
+</html>
