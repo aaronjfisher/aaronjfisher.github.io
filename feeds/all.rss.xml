@@ -17,7 +17,12 @@
 &lt;p&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;########### Code for plots ###########&lt;/span&gt;
 
-&lt;span class="p"&gt;(&lt;/span&gt;x&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;read.csv&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; header&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;#### Load data&lt;/span&gt;
+library&lt;span class="p"&gt;(&lt;/span&gt;RCurl&lt;span class="p"&gt;)&lt;/span&gt;
+library&lt;span class="p"&gt;(&lt;/span&gt;foreign&lt;span class="p"&gt;)&lt;/span&gt;
+twainDataURL &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; getURL&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;                
+&lt;span class="p"&gt;(&lt;/span&gt;x &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; read.csv&lt;span class="p"&gt;(&lt;/span&gt;textConnection&lt;span class="p"&gt;(&lt;/span&gt;twainDataURL&lt;span class="p"&gt;),&lt;/span&gt;header&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
 
 &lt;span class="c1"&gt;#### Plot 1 - words per day&lt;/span&gt;
 firstplot&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="kr"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;

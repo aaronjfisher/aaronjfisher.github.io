@@ -67,7 +67,12 @@
 <p></br></p>
 <div class="highlight"><pre><span class="c1">########### Code for plots ###########</span>
 
-<span class="p">(</span>x<span class="o">&lt;-</span>read.csv<span class="p">(</span><span class="s">&#39;https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv&#39;</span><span class="p">,</span> header<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="c1">#### Load data</span>
+library<span class="p">(</span>RCurl<span class="p">)</span>
+library<span class="p">(</span>foreign<span class="p">)</span>
+twainDataURL <span class="o">&lt;-</span> getURL<span class="p">(</span><span class="s">&quot;https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv&quot;</span><span class="p">)</span>                
+<span class="p">(</span>x <span class="o">&lt;-</span> read.csv<span class="p">(</span>textConnection<span class="p">(</span>twainDataURL<span class="p">),</span>header<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+
 
 <span class="c1">#### Plot 1 - words per day</span>
 firstplot<span class="o">&lt;-</span><span class="kr">function</span><span class="p">(){</span>

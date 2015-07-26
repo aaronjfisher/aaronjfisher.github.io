@@ -1,4 +1,7 @@
-(x<-read.csv('twain.csv',header=TRUE))
+library(RCurl)
+library(foreign)
+twainDataURL <- getURL("https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv")                
+(x <- read.csv(textConnection(twainDataURL),header=TRUE))
 
 
 firstplot<-function(){
