@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Mark Twain was a stats fan, anything else is a Damn Lie. - Aaron Fisher</title>	
+	<meta name="author" content="Aaron Fisher">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="http://aaronjfisher.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="http://aaronjfisher.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Aaron Fisher RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
+	  <header role="banner">
+	    <div class="feeds">
+          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
+	      <div class="pages">
+			  <a href="http://aaronjfisher.github.io/">About</a>
+-			  <a href="http://aaronjfisher.github.io/pages/cv.html">CV</a>
+-			  <a href="http://aaronjfisher.github.io/pages/research.html">Research</a>
+-			  <a href="http://aaronjfisher.github.io/pages/resources.html">Resources</a>
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="http://aaronjfisher.github.io/blog.html">Blog</a>
+			<!-- <a href="http://aaronjfisher.github.io/archives.html"> Archives </a> -->
+
+	      </div>
+		<a href="http://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Mark Twain was a stats fan, anything else is a Damn Lie.</h1>
+		
+<div class="metadata">
+  <time datetime="2015-07-26T00:00:00" pubdate>Sun 26 July 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://aaronjfisher.github.io/author/aaron-fisher.html">Aaron Fisher</a>
+    </address>
+  in <a href="http://aaronjfisher.github.io/category/blog.html">blog</a>
+<p class="tags">tagged <a href="http://aaronjfisher.github.io/tag/communication.html">communication</a>, <a href="http://aaronjfisher.github.io/tag/variable-adjustment.html">variable adjustment</a></p></div>		
+		<p>At some point or another, many of us have heard the quote popularized by Mark Twain, that "there are three kinds of lies: lies, damned lies, and statistics." For a long time, my response was to snarkily question Twain's statistical training -- I would say that he was writing about something beyond his qualifications (but what did I know, I'm not a writer). It turns out though that <strong>Twain's comment was not meant as an attack on overly complicated statistical wizardry that obfuscates the truth. If you read the quote in context, his point is actually quite the opposite.</strong></p>
+<p>Here's an extended quote from <a href="http://www.gutenberg.org/files/19987/19987-h/19987-h.htm" target="_blank">his autobiography</a>, in all of it's wordy glory. In it he describes the speed of his writing process at different points in his life.</p>
+<blockquote>
+<p>I was very young in those days, exceedingly young, marvelously young, younger than I am now, younger than I shall ever be again, by hundreds of years. I worked every night from eleven or twelve until broad day in the morning, and as I did two hundred thousand words in the sixty days, the average was more than three thousand words a day -— nothing for Sir Walter Scott, nothing for Louis Stevenson, nothing for plenty of other people, but quite handsome for me. In 1897, when we were living in Tedworth Square, London, and I was writing the book called "Following the Equator" my average was eighteen hundred words a day; here in Florence (1904), my average seems to be fourteen hundred words per sitting of four or five hours.</p>
+<p>I was deducing from the above that I have been slowing down steadily in these thirty-six years, but I perceive that my statistics have a defect: three thousand words in the spring of 1868 when I was working seven or eight or nine hours at a sitting has little or no advantage over the sitting of to-day, covering half the time and producing half the output. Figures often beguile me, particularly when I have the arranging of them myself; in which case the remark attributed to Disraeli would often apply with justice and force:</p>
+<p>"There are three kinds of lies: lies, damned lies, and statistics."</p>
+</blockquote>
+<p>It's beautifully humble, in a few ways. Twain says that when he first looked back on his daily word output over the years, it seemed as if he was gradually losing his edge and slowing down. When he looked closer though, he realized that he hadn't adjusted for the amount of time he spent writing <em>per day</em>. He had the wrong denominator.</p>
+<p>To paint this graphically, when Twain looked back at his raw data, he saw a pattern of declining writing speed:</p>
+<p><img alt="alt-text" src="blog_supplements/2015-07-26-twain/twain_words_per_day.png" /></p>
+<p>But when he looked closer and adjusted for hours spent writing per day, there was practically no change at all:</p>
+<p><img alt="alt-text" src="blog_supplements/2015-07-26-twain/twain_words_per_hour.png" /></p>
+<p>Twain isn't arguing against complicated models, he's arguing against models that aren't complex enough to sufficiently interpret the data! He even goes a step further when he says "Figures often beguile me, <em>particularly when I have the arranging of them myself.</em>" In other words, if you're in over your head, you should probably consult a statistician. </p>
+<p>After all of this time being misinterpreted, there is a part of me that likes to think Twain would be pleased to see his endorsement of rigorous statistical thinking re-expressed in base R graphics.</p>
+<p>I only recently found out about the extended quote when it was pointed out to me by <a href="http://blades.byu.edu/">Natalie Blades</a>, as we were teaching <a href="http://www.jhsph.edu/departments/epidemiology/continuing-education/graduate-summer-institute-of-epidemiology-and-biostatistics/courses/statistical-reasoning-in-public-health-I.html">a set</a> of <a href="http://www.jhsph.edu/departments/epidemiology/continuing-education/graduate-summer-institute-of-epidemiology-and-biostatistics/courses/statistical.reasoning.in.public.health.II.html">statistics courses</a> this summer that featured the quote. Benjamin Disraeli, the quote's originator, may have been more dismissive of statistical inference. But Twain's thinking seems to be substantially different.</p>
+<p></br></p>
+<div class="highlight"><pre><span class="c1">########### Code for plots ###########</span>
+
+<span class="p">(</span>x<span class="o">&lt;-</span>read.csv<span class="p">(</span><span class="s">&#39;https://aaronjfisher.github.io/blog_supplements/2015-07-26-twain/twain.csv&#39;</span><span class="p">,</span> header<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+
+<span class="c1">#### Plot 1 - words per day</span>
+firstplot<span class="o">&lt;-</span><span class="kr">function</span><span class="p">(){</span>
+    par<span class="p">(</span>mar <span class="o">=</span> c<span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+    plot<span class="p">(</span>x<span class="o">$</span>year<span class="p">,</span> x<span class="o">$</span>wordsPerDay<span class="p">,</span> type<span class="o">=</span><span class="s">&#39;o&#39;</span><span class="p">,</span> ylim<span class="o">=</span>c<span class="p">(</span><span class="m">0</span><span class="p">,</span> max<span class="p">(</span>x<span class="o">$</span>wordsPerDay<span class="p">)),</span> 
+        main<span class="o">=</span><span class="s">&quot;Mark Twain&#39;s Writing Speed&quot;</span><span class="p">,</span> ylab<span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> 
+        xlab<span class="o">=</span><span class="s">&#39;year&#39;</span><span class="p">,</span> col<span class="o">=</span><span class="s">&#39;darkred&#39;</span><span class="p">,</span> lwd<span class="o">=</span><span class="m">2</span><span class="p">,</span> lty<span class="o">=</span><span class="m">2</span><span class="p">)</span>
+    mtext<span class="p">(</span>side<span class="o">=</span><span class="m">2</span><span class="p">,</span> line<span class="o">=</span><span class="m">2.5</span><span class="p">,</span> <span class="s">&quot;words per day&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+firstplot<span class="p">()</span>
+
+<span class="c1">#### Plot 2 - words per hour</span>
+firstplot<span class="p">()</span>
+
+par<span class="p">(</span>new<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+skip<span class="o">&lt;-</span>is.na<span class="p">(</span>x<span class="o">$</span>hrsPerDay<span class="p">)</span>
+ylim2<span class="o">&lt;-</span>c<span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="o">*</span>max<span class="p">(</span>x<span class="o">$</span>wordsPerDay<span class="o">/</span>x<span class="o">$</span>hrsPerDay<span class="p">,</span> na.rm<span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+plot<span class="p">(</span>x<span class="o">$</span>year<span class="p">[</span><span class="o">!</span>skip<span class="p">],</span> <span class="p">(</span>x<span class="o">$</span>wordsPerDay<span class="o">/</span>x<span class="o">$</span>hrsPerDay<span class="p">)[</span><span class="o">!</span>skip<span class="p">],</span> 
+    type<span class="o">=</span><span class="s">&#39;o&#39;</span><span class="p">,</span> axes<span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> xlab<span class="o">=</span><span class="kc">NA</span><span class="p">,</span> ylab<span class="o">=</span><span class="kc">NA</span><span class="p">,</span> col<span class="o">=</span><span class="s">&#39;darkblue&#39;</span><span class="p">,</span> 
+    lwd<span class="o">=</span><span class="m">2</span><span class="p">,</span> ylim<span class="o">=</span>ylim2<span class="p">,</span> lty<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+axis<span class="p">(</span>side<span class="o">=</span><span class="m">4</span><span class="p">)</span>
+mtext<span class="p">(</span>side<span class="o">=</span><span class="m">4</span><span class="p">,</span> line<span class="o">=</span><span class="m">2.5</span><span class="p">,</span> <span class="s">&quot;words per hour&quot;</span><span class="p">)</span>
+
+legend<span class="p">(</span><span class="s">&#39;bottomleft&#39;</span><span class="p">,</span> c<span class="p">(</span><span class="s">&#39;words per day&#39;</span><span class="p">,</span> <span class="s">&#39;words per hour&#39;</span><span class="p">),</span>
+    col<span class="o">=</span>c<span class="p">(</span><span class="s">&#39;darkred&#39;</span><span class="p">,</span> <span class="s">&#39;darkblue&#39;</span><span class="p">),</span> lty<span class="o">=</span>c<span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">),</span> lwd<span class="o">=</span><span class="m">2</span><span class="p">,</span> pch<span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</pre></div>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+	<div class="comments">
+	<!-- <h2>Comments !</h2> -->
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "mark-twain-was-a-stats-fan.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://aaronjfisher.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+<!-- 	        <div class="widget">
+	          <h2>Categories</h2>
+	          <ul>
+	              <li class="active"><a href="http://aaronjfisher.github.io/category/blog.html">blog</a></li>
+	          </ul>
+	        </div>
+ -->
+
+ 			<div>
+	          <h2>Contact</h2>
+			    <!-- <ul class="social"> -->
+	<!-- 			  <li><a href="http://www.biostat.jhsph.edu/people/">Johns Hopkins Bloomberg School of Public Health</a><i></i></li>
+				  <li>615 N. Wolfe Street<i></i></li>
+				  <li>Baltimore, MD 21205<i></i></li>
+				  <br/>
+				  <li>Office#: E3032<i></i></li>
+				  <li>afishe27 at jhu.edu<i></i></li> -->
+			    <!-- </ul> -->	
+    			  <a href="http://www.jhsph.edu">Johns Hopkins Bloomberg School of Public Health</a><br/>
+    			  <a href="http://www.biostat.jhsph.edu">Dept of Biostatistics</a><br/>
+				  615 N. Wolfe Street<br/>
+				  Baltimore, MD 21205<br/>
+				  <br/>
+				  Office #: E3032<br/>
+				  Email: fisher@jhu.edu<br/>
+			  </div>
+
+	          <div class="widget">
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/aaronjfisher">aaronjfisher</a><i></i></li>
+				  <li><a href="https://twitter.com/ajfishr">@ajfishr</a><i></i></li>
+			    </ul>
+			  </div>
+
+	          <div class="widget blogroll">
+	            <h2>Links</h2>
+	            <ul>
+	                <li><a href="http://bmorebiostat.com/">BmoreBiostat</a></li>
+	                <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+	                <li><a href="http://www.jhsph.edu/departments/biostatistics/">JHU Biostatistics</a></li>
+	            </ul>
+	          </div>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+            <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
+          Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	  <script>
+		var _gaq=[['_setAccount','UA-49475556-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	  </script>
+
+</body>
+</html>
