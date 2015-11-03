@@ -57,7 +57,7 @@
 <li><a href="https://github.com/aaronjfisher/bootSVD" target="_blank">bootSVD R package</a> for easy implementation of the bootstrap procedure</li>
 <li><a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain R package</a> for creating brain image figures</li>
 </ul>
-<p></br></p>
+<p></br></br></p>
 <h2>Most people don’t know what a statistically significant relationship looks like, but they can learn: results from a randomized trial in a MOOC</h2>
 <p>For many researchers, the data analysis process begins by looking at scatterplots. This exploratory data analysis (EDA) often motivates a model, ultimately leading to formal tests of significance for aspects of that model. In this light, initial EDA can be seen as an informal hypothesis testing task, where analysts may choose variables to include in their models based on visual perception of significance. We formally studied this task by testing the accuracy with which humans can detect significance from scatterplots. This work sheds light on the effectiveness of EDA for variable selection, as well as the extent of damange caused when analysts do not correct for multiple hypotheses that are tested informally in the EDA process.</p>
 <p>We conducted a survey in a statistics massive open online course (MOOC) where we asked students to classify the relationships shown in scatterplots as either significant or nonsignificant at the 0.05 level. Subjects correctly classified only 47.4% of statistically significant relationships, and 74.6% of non-significant relationships. Classification of statistically significant relationships improved on repeat attempts of the survey, although classification of non-significant relationships did not. Furthermore, adding visual aids to a plot such as a best fit line or scatterplot smooth increased the probability a relationship was classified significant, regardless of whether the relationship was actually significant. </p>
@@ -69,11 +69,20 @@
 
 <ul>
 <li><a href="https://peerj.com/articles/589/" target="_blank">PeerJ Paper</a></li>
+<li><a href="../pdfs/2015_jsm_poster_eda.pdf" target="_blank">2015 JSM Poster</a></li>
 </ul>
+<p></br></br></p>
+<h2>Predicting biopsy results in patients with low-risk prostate cancer</h2>
+<p>For patients with low-risk prostate cancer, prostate biopsies are a highly invasive aspect of active survaillance. I worked with <a href="http://www.rycoley.com/" target="_blank">Yates Coley</a> &amp; <a href="http://www.jhsph.edu/faculty/directory/profile/3859/scott-zeger" target="_blank">Scott Zeger</a> on a <a href="http://arxiv.org/abs/1508.07511" target="_blank">Bayesian Heirarchical model</a> to predict a patient's latent cancer state based on data from previous prostate biopsies and prostate-specific antigen (PSA) measurements. The goal of this modelling approach is to help guide treatment decisions, and to reduce the number of unnecessary biopsies and protatectamies.</p>
+<p>My role in this project was to apply a method for <a href="http://arxiv.org/abs/1510.08802" target="_blank">fast latent state estimation</a> based on new patient data. This would allow doctors to give patients in-clinic risk estimates, without having to refit the entire model with batch MCMC. Although the proposed method (based on Importance Sampling) does not require novel Bayesian techniques, it does address one of the obstacles in applying off-the-shelf Bayesain Heirarchical models in clinical settings.</p>
+<ul>
+<li><a href="http://arxiv.org/abs/1510.08802" target="_blank">Technical Report on arXiv</a></li>
+</ul>
+<p></br></br></p>
 <h2><em>interAdapt</em> application for planning adaptive clinical trials</h2>
 <p>When designing a clinical trial, study coordinators often have prior evidence that the treatment might work better in a one subpopulation than another. One strategy in these scenarios is to conduct a trial with an adaptive enrollment criteria, where we decide whether or not to continue enrolling patients from each subpopulation based on interim analyses of whether each subpopulation is benefiting. In order for the type I error and the power of the trial to be calculable, the decision rules for changing enrollment must be set before the trial starts.</p>
 <p><em>interAdapt</em> is a tool for generating pre-determined decision rules for trials with adaptive enrollement criteria. Using this application, researchers can also compare the performance of the resulting adaptive trial designs to the performance of standard designs with fixed enrollment criteria. Performance is compared in terms of power, expected sample size, and expected trial duration.</p>
-<p></br>
+<p></br></br>
 <p align="center">
 <img src="../images/interAdapt_screenshot.png" alt="interAdapt" style="width: 90%;"/>
 <i>Screenshot from interAdapt</i>
