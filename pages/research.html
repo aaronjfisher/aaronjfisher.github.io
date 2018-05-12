@@ -17,22 +17,22 @@
     <div class="container">
 	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
 	  <header role="banner">
-	    <div class="feeds">
-          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
- -->
-	    </div>
 	      <div class="pages">
 			  <a href="http://aaronjfisher.github.io/">About</a>
 -			  <a href="http://aaronjfisher.github.io/pages/cv.html">CV</a>
 -			  <a href="http://aaronjfisher.github.io/pages/research.html">Research</a>
--			  <a href="http://aaronjfisher.github.io/pages/resources.html">Resources</a>
+-			  <a href="http://aaronjfisher.github.io/pages/contact.html">Contact</a>
 
 			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
-			&nbsp <a href="http://aaronjfisher.github.io/blog.html">Blog</a>
+			&nbsp <a href="http://aaronjfisher.github.io/blog_index.html">Blog</a>
 			<!-- <a href="http://aaronjfisher.github.io/archives.html"> Archives </a> -->
 
 	      </div>
 		<a href="http://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+		<div class="feeds">
+          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
       </header>
 	
 	  <div class="wrapper">
@@ -40,6 +40,17 @@
 		  <div role="main" class="content">
 
 <h1>Research</h1>
+<h2>Variable importance when all models are wrong, but <em>many</em> are useful</h2>
+<p>Data analysts are often interested in the importance of covariates for predicting outcomes. Specifically, analysts may ask: how much does a given prediction model depend on a set of covariates in order to predict well? To inform this question, I worked with <a href="https://users.cs.duke.edu/~cynthia/" target="_blank">Cynthia Rudin</a> &amp; <a href="https://sites.sph.harvard.edu/francesca-dominici/" target="_blank">Francesca Dominici</a> to develop "Model Reliance" (MR), a permutation-based measure inspired by <a href="https://projecteuclid.org/euclid.ss/1009213726" target="_blank">Breiman (2001)</a>. We draw connections from MR to conditional causal effects, linear model regression coefficients, and asymptotically normal U-statistic estimators.</p>
+<p>However, because it is often the case that <em>many</em> models predict well, analysts may also be interested in knowing the degree to which <em>any</em> well-performing model (from a prespecified model class) relies on covariates of interest. We refer to this quantity as "Model Class Reliance." Roughly speaking, MCR captures the diversity of mechanisms underlying different well-performing prediction models.</p>
+<p>We show an illustration of MCR below. The task here is to classify a simulated outcome <span class="math">\(Y\)</span> ("x" label or "o" label) based on two covariates, <span class="math">\(X_1\)</span> and <span class="math">\(X_2\)</span> (shown on the x and y axes). We use grey lines to mark the classification boundaries for a subset of classifiers with low in-sample prediction loss. Each model relies on information in <span class="math">\(X_1\)</span> to a different degree. We use dark green lines to mark models that approximately obtain the lowest (solid line) and highest (dashed line) reliance on the covariate <span class="math">\(X_1\)</span>. </p>
+<p align="center">
+<img src="../images/2018-05-12_website_example_poly_hinge_circles.png" alt="mcrFigure" style="width: 50%;"/>
+</p>
+
+<ul>
+<li><a href="https://arxiv.org/abs/1801.01489" target="_blank">arXiv paper</a> on variable importance and the "Rashomon" effect</li>
+</ul>
 <h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
 <p>Principal Component Analysis (PCA) is a common dimension reduction step in many algorithms applied to high dimensional data, where the number of measurements per subject is much greater than the number of subjects. The resulting principal components (PCs) are random test statistics with sampling variability (i.e. if a new sample was recruited, the PCs for the new sample would be different). It is important to estimate this sampling variability, and the extent to which this variability propagates into test statistics that depend on PCA. A bootstrap procedure provides one method for variance estimation, but often comes with a prohibitively heavy computational burden.</p>
 <p>To ease this burden, I worked with <a href="http://www.biostat.jhsph.edu/~vzipunni/" target="_blank">Vadim Zipunnikov</a> and <a href="http://www.bcaffo.com" target="_blank">Brian Caffo</a> to develop an exact method for calculating PCs in bootstrap samples that is an order of magnitude faster than the standard method. I applied this method to estimate standard errors of the 3 leading PCs of a brain MRI dataset (≈ 3 million voxels, 352 subjects) based on 1000 bootstrap samples (see below). <em>Computation time was reduced from 4 days to 47 minutes,</em> using a standard laptop. My work on this project earned me our department's June B. Culley Award for outstanding achievement on a school-wide oral examination paper.</p>
@@ -49,10 +60,7 @@
 
 <p>The key intuition for this speed improvement comes from the fact that all bootstrap samples are contained in the same n-dimensional subspace as the original sample (where n is the sample size). If we represent bootstrap samples by their n-dimensional coordinates relative to this subspace, we can dramatically reduce computation times and memory requirements.</p>
 <ul>
-<li><a href="http://arxiv.org/abs/1405.0922" target="_blank">Paper on arXiv</a> <ul>
-<li><em>(to appear in Journal of the American Statistical Association)</em></li>
-</ul>
-</li>
+<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/27616801" target="_blank">Paper link</a> </li>
 <li><a href="../pdfs/2014_jsm_poster_bootSVD.pdf" target="_blank">Poster - JSM 2014</a></li>
 <li><a href="https://github.com/aaronjfisher/bootSVD" target="_blank">bootSVD R package</a> for easy implementation of the bootstrap procedure</li>
 <li><a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain R package</a> for creating brain image figures</li>
@@ -79,77 +87,78 @@
 </ul>
 <p></br></br></p>
 <h2>Optimizing adaptive clinical trials</h2>
-<p>When designing a clinical trial, study coordinators often have prior evidence that the treatment might work better in a one subpopulation than another. One strategy in these scenarios is to conduct a trial with an adaptive enrollment criteria, where investigators decide whether or not to continue enrolling patients from each subpopulation based on interim analyses of whether each subpopulation is benefiting. In order for the type I error and the power of the trial to be calculable, the decision rules for changing enrollment must be set before the trial starts.</p>
-<p>My work in this area centers on optimizing the decision rules of AETDs to meet specific objectives, such as expected sample size, alpha level, and power for the trial. The first stage of this work was to build an <a href="https://michaelrosenblum.shinyapps.io/interAdapt" target="_blank">interactive Shiny application</a> which allowed clinical investigators to manually adjust the parameters of an AETD and observe the effects on trial performance (see screenshot below). The second stage was to implement a simulated annealing optimization approach in a <a href="http://biostats.bepress.com/jhubiostat/paper277/" target="_blank">simulation study led by Tianchen Qian</a>, on the efficiency benefits available by incorporating baseline variables in adaptive trials.</p>
-<p>I am interested in further developing methods for optimizing decision rules of adaptive designs, and for multiple hypothesis testing corrections in this context.</p>
-<p></br></br>
-<p align="center">
-<img src="../images/interAdapt_screenshot.png" alt="interAdapt" style="width: 90%;"/>
-<i>Screenshot from interAdapt tool for planning trials</i>
-</p></p>
+<p>When designing a clinical trial, study coordinators often have prior evidence that the treatment might work better in a one subpopulation than another. One strategy in these scenarios is to conduct a trial with an adaptive enrollment criteria, where investigators decide whether or not to continue enrolling patients from each subpopulation based on interim analyses of whether each subpopulation is benefiting. In order for the type I error and the power of the trial to be calculable, the decision rules for changing enrollment must be set before the trial starts. My work in this area centers on optimizing the decision rules of adaptive enrollment trial designs to meet specific objectives, such as expected sample size, alpha level, and power for the trial.</p>
+<p><br/></p>
 <ul>
-<li><a href="https://michaelrosenblum.shinyapps.io/interAdapt" target="_blank">Shiny app link</a></li>
-<li><a href="http://arxiv.org/abs/1404.0734" target="_blank">Documentation on arXiv</a></li>
+<li><a href="http://biostats.bepress.com/jhubiostat/paper279/" target="_blank">Preprint link</a></li>
 </ul>
 <p><br/></p>
-<p><br/></p>		
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>		
 
 		  </div>	
 		  
-		  <div class="sidebar">
-
-<!-- 	        <div class="widget">
-	          <h2>Categories</h2>
-	          <ul>
-	              <li ><a href="http://aaronjfisher.github.io/category/blog.html">blog</a></li>
-	          </ul>
-	        </div>
- -->
-
- 			<div>
-	          <h2>Contact</h2>
-			    <!-- <ul class="social"> -->
-	<!-- 			  <li><a href="http://www.biostat.jhsph.edu/people/">Johns Hopkins Bloomberg School of Public Health</a><i></i></li>
-				  <li>615 N. Wolfe Street<i></i></li>
-				  <li>Baltimore, MD 21205<i></i></li>
-				  <br/>
-				  <li>Office#: E3032<i></i></li>
-				  <li>afishe27 at jhu.edu<i></i></li> -->
-			    <!-- </ul> -->	
-    			  <a href="https://www.hsph.harvard.edu/">Harvard T.H. Chan School of Public Health</a><br/>
-    			  <a href="https://www.hsph.harvard.edu/biostatistics/">Dept of Biostatistics</a><br/>
-				  677 Huntington Avenue<br/>
-				  Boston, MA 02115<br/>
-				  <br/>
-				  <!-- Office #: E3032<br/> -->
-				  aafisher@hsph.harvard.edu<br/>
-			  </div>
-
-	          <div class="widget">
-	          <h2>Social</h2>
-			    <ul class="social">
-				  <li><a href="https://github.com/aaronjfisher">aaronjfisher</a><i></i></li>
-				  <li><a href="https://twitter.com/ajfishr">@ajfishr</a><i></i></li>
-			    </ul>
-			  </div>
-
-	          <div class="widget blogroll">
-	            <h2>Links</h2>
-	            <ul>
-	                <li><a href="http://bmorebiostat.com/">BmoreBiostat</a></li>
-	                <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
-	                <li><a href="http://www.jhsph.edu/departments/biostatistics/">JHU Biostatistics</a></li>
-	            </ul>
-	          </div>
-
-		  </div>
+		 
 
 	  </div>
 
       <footer>
 		<p role="contentinfo">
             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
-          Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+          Proudly powered by <a href="http://docs.getpelican.com">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
     	</p>
 
 	  </footer>	
