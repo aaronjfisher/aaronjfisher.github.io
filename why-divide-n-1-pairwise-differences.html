@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Why divide by n-1? Understanding the sample variance with pairwise differences - Aaron Fisher</title>	
+	<meta name="author" content="Aaron Fisher">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="http://aaronjfisher.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="http://aaronjfisher.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Aaron Fisher RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
+	  <header role="banner">
+	      <div class="pages">
+			  <a href="http://aaronjfisher.github.io/">About</a>
+-			  <a href="http://aaronjfisher.github.io/pages/cv.html">CV</a>
+-			  <a href="http://aaronjfisher.github.io/pages/research.html">Research</a>
+-			  <a href="http://aaronjfisher.github.io/pages/contact.html">Contact</a>
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="http://aaronjfisher.github.io/blog_index.html">Blog</a>
+			<!-- <a href="http://aaronjfisher.github.io/archives.html"> Archives </a> -->
+
+	      </div>
+		<a href="http://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+		<div class="feeds">
+          <!--             <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>Why divide by n-1? Understanding the sample variance with pairwise differences</h1>
+		
+<div class="metadata">
+  <time datetime="2018-11-10T00:00:00-05:00" pubdate>Sat 10 November 2018</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://aaronjfisher.github.io/author/aaron-fisher.html">Aaron Fisher</a>
+    </address>
+  in <a href="http://aaronjfisher.github.io/category/blog.html">blog</a>
+<p class="tags">tagged <a href="http://aaronjfisher.github.io/tag/combinations.html">combinations</a>, <a href="http://aaronjfisher.github.io/tag/education.html">education</a></p></div>		
+		<p>Most people find Statistics 101 to be pretty intuitive... until all of a sudden it isn't. One of the first challenges is why we divide the by <span class="math">\(n-1\)</span> instead of <span class="math">\(n\)</span> when computing the <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction" target="_blank">corrected sample variance</a>.</p>
+<p>There is an <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction#Proof_of_correctness_%E2%80%93_Alternate_1" target="_blank">explanation</a> that I personally like most, because the proof can be broken up into a few intuitive pieces:</p>
+<ol>
+<li>A variance can be described equivalently in terms of how much people tend to differ from the average, or in terms of how much people tend to differ <em>from each other.</em> <ul>
+<li>This means that one way to estimate variance is to look at pairwise differences between people in our sample.</li>
+</ul>
+</li>
+<li>For each individual in our sample, <em>there are only n-1 people we can compare them to.</em> </li>
+<li>Averaging over all possible comparisons gives us the corrected sample variance (multiplied by 2).</li>
+</ol>
+<p>A quick note, the <span class="math">\(n-1\)</span> result is often taught in conjunction with the concept of <a href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)" target="_blank">degrees of freedom</a>, which I won't go into here.</p>
+<p>This is not just a heuristic. If we look at each point in more detail, we can prove that the corrected sample variance is unbiased...</p>
+<h2><a name="pair-unbiased"></a> 1) Details: variance as an expected pairwise difference</h2>
+<p>First we'll quickly formalize the notion in Point 1. Suppose we want to know the variance of a random variable <span class="math">\(Y\)</span>. Let <span class="math">\(Y_1\)</span> and <span class="math">\(Y_2\)</span> denote two independent random variables with the same distribution as <span class="math">\(Y\)</span>, e.g., corresponding to two people in the same population. Consider how different we expect them to be from each other, in terms of squared differences.</p>
+<!-- ![alt-text](sums-exp-1.png) -->
+
+<!-- latexit / file / export image (12pt) -->
+
+<div class="math">\begin{align*}
+\mathbb{E}((Y_1 - Y_2)^2) 
+&amp;= \mathbb{E}(Y_1^2) - 2\mathbb{E}(Y_1)\mathbb{E}(Y_2) + \mathbb{E}(Y_2^2)\\
+&amp;= 2\mathbb{E}(Y^2) - 2(\mathbb{E}Y)^2\\
+&amp;= 2\text{Var}(Y)\\
+\end{align*}</div>
+<p>Above, the first line comes from <a href="https://en.wikipedia.org/wiki/Expected_value#Linearity" target="_blank">linearity of expectations</a> and the independence of <span class="math">\(Y_1\)</span> and <span class="math">\(Y_2\)</span>. The second line comes from the fact that <span class="math">\(Y_1\)</span> and <span class="math">\(Y_2\)</span> have the same distribution as <span class="math">\(Y\)</span>. The third line comes from a <a href="https://en.wikipedia.org/wiki/Variance#Definition" target="_blank">common expansion</a> of the variance.</p>
+<p>In words, we just showed that the expected squared difference between two observations is equal to twice the variance. </p>
+<h2>2) Details: for each individual in the sample, there are only n-1 comparisons available</h2>
+<p>Now we can estimate the variance of <span class="math">\(Y\)</span> by looking at how much pairs of observations in our sample differ. Specifically, given a sample <span class="math">\(y_1,\dots,y_n,\)</span> we can look at all pairs <span class="math">\((y_i,y_j)\)</span> and their associated differences <span class="math">\((y_i-y_j)^2\)</span>. There are <span class="math">\(n(n-1)\)</span> such (ordered) pairs in total, and averaging over all of them gives</p>
+<!-- ![alt-text](sums-goal.png) -->
+
+<div class="math">\begin{equation}
+\frac{1}{n(n-1)}
+\sum_{i=1}^n\sum_{j\neq i}(y_i - y_j)^2.\label{goal}
+\end{equation}</div>
+<p>This is the <span class="math">\(n-1\)</span> we were looking for! We already know that each term in this double summation is unbiased for <span class="math">\(2Var(Y)\)</span> (from our <a href="#pair-unbiased">steps in Section 1</a>), so we also know that the average (Eq <span class="math">\(\ref{goal}\)</span> itself) is unbiased for <span class="math">\(2Var(Y)\)</span>.</p>
+<h2>3) Details: the average over all possible comparisons (Eq <span class="math">\(\ref{goal}\)</span>) is equal to twice the corrected sample variance</h2>
+<p>To simplify the double summation in Eq <span class="math">\(\ref{goal}\)</span>, it will be helpful to note that <span class="math">\((y_i-y_j)^2=0\)</span> when <span class="math">\(i=j\)</span>. This means that</p>
+<div class="math">\begin{equation}
+\sum_{i=1}^n\sum_{j\neq i}(y_i - y_j)^2
+=
+\sum_{i=1}^n\sum_{j=1}^n(y_i - y_j)^2.\label{zero-ij}
+\end{equation}</div>
+<p>It will also be helpful to note that <span class="math">\(\sum_{i=1}^ny_i=n\bar{y}\)</span>, where <span class="math">\(\bar{y}\)</span> is the sample average, and that</p>
+<div class="math">\begin{equation}
+\sum_{i=1}^ny_i\bar{y}=n\bar{y}^2 =\sum_{i=1}^n\bar{y}^2. \label{ybar2}
+\end{equation}</div>
+<p>Putting all of this together, we can apply similar steps as we did in <a href="#pair-unbiased">Section 1</a> to reduce the average of all pairwise differences (Eq <span class="math">\(\ref{goal}\)</span>) into twice the corrected sample variance.</p>
+<div class="math">\begin{align*}
+\frac{1}{ n(n-1)}\sum_{i=1}^n\sum_{j\neq i}(y_i - y_j)^2
+&amp;=\frac{1}{ n(n-1)}
+\sum_{i=1}^n\sum_{j=1}^n(y_i - y_j)^2 &amp; \text{from Eq }\ref{zero-ij}&amp;\\
+&amp;= \frac{1}{ n(n-1)}
+\left\{\sum_{i=1}^n\sum_{j=1}^ny_i^2 -2 \sum_{i=1}^ny_i \sum_{j=1}^ny_j + \sum_{i=1}^n\sum_{j=1}^n y_j^2
+\right\} &amp; &amp;\\
+&amp;= \frac{1}{ n(n-1)}
+\left\{n\sum_{i=1}^n y_i^2 -2 \sum_{i=1}^ny_i (n\bar{y}) + n\sum_{j=1}^n y_j^2
+\right\} &amp; &amp;\\
+&amp;= \frac{2}{ (n-1)}
+\left\{\sum_{i=1}^n y_i^2 - \sum_{i=1}^ny_i\bar{y}  
+\right\} &amp; &amp;\\
+&amp;= \frac{2}{ (n-1)}
+\left\{\sum_{i=1}^n y_i^2 - 2\sum_{i=1}^ny_i\bar{y}  
++ \sum_{i=1}^ny_i\bar{y} \right\} &amp; &amp;\\
+&amp;= \frac{2}{ (n-1)}
+\left\{\sum_{i=1}^n y_i^2 - 2\sum_{i=1}^ny_i\bar{y}  
++ \sum_{i=1}^n\bar{y}^2 \right\} &amp; \text{from Eq }\ref{ybar2}&amp;\\
+&amp;= \frac{2}{ (n-1)}
+\sum_{i=1}^n (y_i - \bar{y})^2 &amp; &amp;\\
+&amp;= 2\widehat{Var}(Y). &amp; &amp;
+\end{align*}</div>
+<p>Where <span class="math">\(\widehat{Var}(Y)\)</span> is the corrected sample variance. </p>
+<p>That's it! The corrected sample variance turns out to be equal to the average over all pairwise differences (Eq <span class="math">\(\ref{goal}\)</span>)! We already said that Eq <span class="math">\(\ref{goal}\)</span> is unbiased for the 2 times population variance, which means <span class="math">\(\widehat{Var}(Y)\)</span> (with the n-1 denominator) is unbiased for <span class="math">\(Var(Y)\)</span>.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+	<div class="comments">
+	<!-- <h2>Comments !</h2> -->
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "why-divide-n-1-pairwise-differences.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://aaronjfisher.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		 
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+            <a href="http://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
+          Proudly powered by <a href="http://docs.getpelican.com">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	  <script>
+		var _gaq=[['_setAccount','UA-49475556-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	  </script>
+
+</body>
+</html>
