@@ -46,12 +46,6 @@
 <li><a href="https://arxiv.org/abs/1801.01489" target="_blank">arXiv paper</a>: All Models are Wrong but <em>many</em> are Useful: Variable Importance for Black-Box, Proprietary, or Misspecified Prediction Models, using Model Class Reliance
 </br></br></li>
 </ul>
-<h2>How the effects of interventions vary across individuals</h2>
-<p>My previous work on this topic focused on adaptive clinical trials that allow for the possibility of approving an intervention only in a certain subgroup. My ongoing work studies how much variability remains that cannot be mitigated by tailoring the intervention by subgroup. This current work is motivated by studies of air pollution, where many individuals face the same exposure, but some individuals may experience greater harm as a result.</p>
-<ul>
-<li><a href="https://www.tandfonline.com/doi/abs/10.1080/10543406.2018.1489401" target="_blank">Journal of Biopharmaceutical Statistics paper</a>
-</br></br></li>
-</ul>
 <h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
 <p>Principal Component Analysis (PCA) is a common dimension reduction step in many algorithms applied to high dimensional data, where the number of measurements per subject is much greater than the number of subjects. The resulting principal components (PCs) are random test statistics with sampling variability (i.e. if a new sample was recruited, the PCs for the new sample would be different). It is important to estimate this sampling variability, and the extent to which this variability propagates into test statistics that depend on PCA. A bootstrap procedure provides one method for variance estimation, but often comes with a prohibitively heavy computational burden.</p>
 <p>To ease this burden, I worked with <a href="http://www.biostat.jhsph.edu/~vzipunni/" target="_blank">Vadim Zipunnikov</a> and <a href="http://www.bcaffo.com" target="_blank">Brian Caffo</a> to develop an exact method for calculating PCs in bootstrap samples that is an order of magnitude faster than the standard method. I applied this method to estimate standard errors of the 3 leading PCs of a brain MRI dataset (≈ 3 million voxels, 352 subjects) based on 1000 bootstrap samples (see below). <em>Computation time was reduced from 4 days to 47 minutes,</em> using a standard laptop. </p>
@@ -66,6 +60,12 @@
 <li><a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain R package</a> for creating brain image figures</li>
 </ul>
 <p></br></br></p>
+<h2>How the effects of interventions vary across individuals</h2>
+<p>My previous work on this topic focused on adaptive clinical trials that allow for the possibility of approving an intervention only in a certain subgroup. My ongoing work studies how much variability remains that cannot be mitigated by tailoring the intervention by subgroup. This current work is motivated by studies of air pollution, where many individuals face the same exposure, but some individuals may experience greater harm as a result.</p>
+<ul>
+<li><a href="https://www.tandfonline.com/doi/abs/10.1080/10543406.2018.1489401" target="_blank">Journal of Biopharmaceutical Statistics paper</a>
+</br></br></li>
+</ul>
 <h2>Evidence based data analysis -- studying statistical methodology in practice</h2>
 <p>Much statistical research focuses on the sampling variability of estimators under different theoretical scenarios. However, little is known on the sampling variability that is introduced when human investigators implement analysis methods differently. Knowledge on this human variability could form a key aspect of recommending statistical methods to investigators, and lead to improved reproducibility. <a href="https://peerj.com/articles/589/" target="_blank">In work</a> with <a href="http://jtleek.com/">Jeff Leek</a>, <a href="http://www.cvmbs.colostate.edu/DirectorySearch/Search/MemberProfile/cvmbs/35248/Anderson/Georgiana" target="_blank">G. Brooke Anderson</a>, and <a href="http://www.biostat.jhsph.edu/~rpeng/" target="_blank">Roger Peng</a>, we have proposed the concept of evidence based data analysis: the scientific study of how statistical methods perform in practice, when they are implemented, sometimes imperfectly, by analysts of different levels of statistical training.</p>
 <p>In our work, we specifically looked at the common statistical practice of using exploratory data analysis (EDA) to identify significant predictors to include in a model. We conducted a survey in a statistics massive open online course, and asked students to rate the relationships shown in scatterplots as either significant or non-significant at the 0.05 level. Initial rating accuracy was poor, but in some cases improved with practice. Our work sheds light on how fostering statistical literacy can increase the clarity of communication in science, on the effectiveness of EDA for variable selection, and on the extent of damage caused when analysts do not correct for multiple hypotheses that are tested informally in the EDA process.</p>
