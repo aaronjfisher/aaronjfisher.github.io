@@ -46,6 +46,19 @@
 <li><a href="https://arxiv.org/abs/1801.01489" target="_blank">arXiv paper</a>: All Models are Wrong but <em>many</em> are Useful: Variable Importance for Black-Box, Proprietary, or Misspecified Prediction Models, using Model Class Reliance
 </br></br></li>
 </ul>
+<h2>Teaching visual intuition for influence functions</h2>
+<p>Statistical analyses often aim to describe a particular attribute (or estimand) of an underlying population distribution, such as the best fitting linear regression line. Influence functions measure how sensitive attributes like these are to changes in the underlying distribution. For example, influence functions can describe how much the best-fitting linear regression model will change in response to a higher proportion of outliers. Influence functions can also be used to improve estimation efficiency, generating estimators with certain kinds of optimal mean-squared error properties.</p>
+<p>Unfortunately, and despite their broad applicability, the technical theory underlying influence functions intimidates many researchers away from the subject. This lack of approachability slows both the theoretical progress within the IF literature, and as well as the dissemination of results.</p>
+<p>In an <a href="https://arxiv.org/pdf/1810.03260.pdf" target="_blank">educational paper</a> with <a href="http://www.ehkennedy.com" target="_blank">Edward Kennedy</a>, we have tried make this topic more accessible. Our paper is based around two sets of colorful illustrations, and our our hope is that these illustrations can be similarly useful to illustrations of a derivative as the “slope at a point,” or illustrations of integrals as the “area under a curve.” For these calculus topics, a guiding intuition can be visualized in minutes, even though formal study typically takes over a semester of coursework.</p>
+<p align="center">
+<img src="../images/2018-10-01_several_paths.png" alt="PCs+se" style="width: 90%;"/>
+</p>
+
+<ul>
+<li><a href="https://arxiv.org/pdf/1810.03260.pdf" target="_blank">arXiv paper</a>: Visually Communicating and Teaching Intuition for
+Influence Functions
+</br></br></li>
+</ul>
 <h2>Fast, exact bootstrap principal component analysis for high dimensional data (i.e. &gt;1 million variables)</h2>
 <p>Principal Component Analysis (PCA) is a common dimension reduction step in many algorithms applied to high dimensional data, where the number of measurements per subject is much greater than the number of subjects. The resulting principal components (PCs) are random test statistics with sampling variability (i.e. if a new sample was recruited, the PCs for the new sample would be different). It is important to estimate this sampling variability, and the extent to which this variability propagates into test statistics that depend on PCA. A bootstrap procedure provides one method for variance estimation, but often comes with a prohibitively heavy computational burden.</p>
 <p>To ease this burden, I worked with <a href="http://www.biostat.jhsph.edu/~vzipunni/" target="_blank">Vadim Zipunnikov</a> and <a href="http://www.bcaffo.com" target="_blank">Brian Caffo</a> to develop an exact method for calculating PCs in bootstrap samples that is an order of magnitude faster than the standard method. I applied this method to estimate standard errors of the 3 leading PCs of a brain MRI dataset (≈ 3 million voxels, 352 subjects) based on 1000 bootstrap samples (see below). <em>Computation time was reduced from 4 days to 47 minutes,</em> using a standard laptop. </p>
