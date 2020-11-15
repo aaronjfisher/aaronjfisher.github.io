@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>The uniqueness of SHAP depends on how you handle external information - Aaron Fisher</title>	
+	<meta name="author" content="Aaron Fisher">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="https://aaronjfisher.github.io/theme/css/main.css" type="text/css" />
+		
+
+    <link href="https://aaronjfisher.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Aaron Fisher RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  <img src="../images/2013-11-17_13.53.21-noFlowers-cleanend-arrows3-crop1.png" width=100%/>
+	  <header role="banner">
+	      <div class="pages">
+			  <a href="https://aaronjfisher.github.io/">About</a>
+-			  <a href="https://aaronjfisher.github.io/pages/cv.html">CV</a>
+-			  <a href="https://aaronjfisher.github.io/pages/research.html">Research</a>
+-			  <a href="https://aaronjfisher.github.io/pages/contact.html">Contact</a>
+
+			<!--  AF - Manually add some stuff that wasn't there, not including archives yet, as we really don't have enough stuff, &nbsp is a non break space, which seemed nessecary as a hack to get the banner spacing right -->
+			&nbsp <a href="https://aaronjfisher.github.io/blog_index.html">Blog</a>
+			<!-- <a href="https://aaronjfisher.github.io/archives.html"> Archives </a> -->
+
+	      </div>
+		<a href="https://aaronjfisher.github.io/index.html" class="title">Aaron Fisher</a>
+		<div class="feeds">
+          <!--             <a href="https://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+ -->
+	    </div>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>The uniqueness of SHAP depends on how you handle external information</h1>
+		
+<div class="metadata">
+  <time datetime="2020-09-01T00:00:00-04:00" pubdate>Tue 01 September 2020</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://aaronjfisher.github.io/author/aaron-fisher.html">Aaron Fisher</a>
+    </address>
+  in <a href="https://aaronjfisher.github.io/category/blog.html">blog</a>
+<p class="tags">tagged <a href="https://aaronjfisher.github.io/tag/transparency.html">transparency</a>, <a href="https://aaronjfisher.github.io/tag/interpretability.html">interpretability</a>, <a href="https://aaronjfisher.github.io/tag/explainability.html">explainability</a></p></div>		
+		<!-- date!!! -->
+
+<!-- Tweet:
+
+1   
+While rereading the SHAP 2017 NeurIPS paper recently, I noticed error in Thm 1. 
+
+SHAP values actually are not uniquely defined without a Symmetry condition. And you might not always want to add this condition. 
+
+More here, and below...
+https://aaronjfisher.github.io/grade-for-craft.html
+ 1/n
+
+2
+SHAP looks at how predictions change when only a subset of model inputs are measured, and uses this information to decompose the predictions into components associated with each input. 
+
+To illustrate, lets consider a hypothetical example based on COVID-19 screening
+
+
+
+
+3
+Suppose a healthcare worker is assigned a 98% chance of being infected based on the following 3 measurements:
+
+A) no dry cough
+B) fever present, &
+C) positive nasal swab test.
+
+SHAP breaks down that 98% into three pieces, one for each of the above facts.
+
+
+
+4
+To run SHAP, we need to know how the infection probability would update as we learn more and more info. Below are some hypothetical update examples.
+
+Here, if we measure a swab test first, then cough, then fever (C-A-B), then fever has almost no marginal influence on prediction
+
+
+
+5
+On the other hand, if we measure fever first, then cough, then swab (B-A-C), the fever has a huge marginal influence on our predicted probability.
+
+To view this explicitly, we can plot the update due to measuring each input, under each ordering.
+
+
+
+6
+SHAP can be computed by averaging across orderings, so that we only have one summary of contributions per input. This smooths away the dependency on ordering.
+
+
+
+7
+But this averaging can be misleading if the measurements are done in a known order. For example, in practice, fever checks are almost always done before nasal swabs. So, in practice fever checks have a large influence. 
+
+
+
+
+8
+If we average their influence over orderings like swab-cough-fever (C-A-B), we might underestimate the practical value of fever and cough checks. Fever and cough checks only add substantial value when collected first.
+
+
+
+
+9
+The question of whether to incorporate external domain info, like how prevelanent different orders are, is central to Thm 1. 
+
+Roughly, L&L Thm 1 says that the SHAP solution is unique, even if we allow prior or external info to influence the explanation. That's actually not true.
+
+
+
+10
+L&L implitly assume that feature names don't matter in their proof, but feature names do matter if we incorperate prior knowledge into the explanation process. 
+
+
+
+11
+In order for SHAP to be a unique solution, we need to add a Symmetry condition (common in the Shapley value literature) that effectively blocks prior information about the inputs.
+
+
+
+12
+Adding Symmetry is reasonable in generic scenarios lacking prior knowledge, but might not be desireable if we have relevant prior knowledge about the inputs, and how they tend to contribute information.
+
+
+
+
+
+1/3 -->
+
+<h2>Summary</h2>
+<p>SHapley Values for Additive exPlanations (SHAP; <a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">Lundberg &amp; Lee, 2017</a>) is a <a href="https://arxiv.org/abs/1909.06342" target="_blank">popular</a> method for explaning black box model predictions. Lundberg &amp; Lee (hereaer, L&amp;L) consider the case where model inputs can be measured sequentially, and where the prediction can be updated as more and more information is acquired. In this setting, the update caused by incorporating a new piece of information depends on the existing information that has already been accounted for. That is, the update caused by adding a particular input feature depends on the <em>order</em> in which the inputs are measured. L&amp;L suggest that the overall contribution of each feature be summarized by averaging that feature's marginal contribution across all possible input orderings. Roughly speaking, this has the effect of smoothing away the dependency on ordering. </p>
+<p>The authors claim that this averaging approach is the only method that satisfies a certain list of intuitive conditions defined by the Shapley values from game theory (L&amp;L Theorem 1). Notably absent from their list however is the well-known "Symmetry" condition, which requires that any two features that produce the same prediction updates be given the same explanation. This condition would effectively prevent the model explanation from being influenced by prior or external knowledge about either the problem domain or the way in which inputs tend to be measured. L&amp;L state that Symmetry is not required to ensure a unique model explanation.</p>
+<p><strong>The primary goal of this comment is to point out that this last claim is in error. L&amp;L implitly assume that feature names don't matter in their proof, but feature names do matter if we incorperate prior knowledge into the explanation process. Modifying the theorem by explicitly adding a Symmetry requirement <em>does</em> ensure a unique solution, and such an addition may be reasonable in generic scenarios lacking prior knowledge. However, <em>without the Symmetry constraint, any weighted combination over the set of possible orderings produces a valid solution.</em> Indeed, applying weights to the different measurement orderings may be a useful way to incorporate prior knowledge.</strong> <!-- The mistake in the proof of L&L Theorem 1 comes from implicitly assuming a condition known as "<a href="https://en.wikipedia.org/wiki/Shapley_value#Anonymity" target ="_blank">Anonymity</a>." This condition is actually stronger than Symmetry (see <a href="https://books.google.com/books/about/Game_Theory.html?id=xCnMCQAAQBAJ#:~:text=This%20textbook%20presents%20the%20basics,theory%2C%20including%20cooperative%20game%20theory.">Peters, 2008: pages 245 &amp; 257</a>{:target="_blank"}), and invalidates solutions that do not weight orderings equally. --><!--  Anonymity and roughly states that renaming a feature or changing the position where a feature appears cannot affect the explanation assigned to that feature. In other words, Anonymity prevents prior information about features from influencing the explanations assigned to those features. It also enforces that all orderings be weighted equally. --> </p>
+<p>For example, suppose two pieces of information are collected as part of a procedure to diagnose arm fractures: a physical exam for pain and swelling, and an x-ray. As the doctor collects each piece of information, they update their predicted probability of fracture. However, the extent to which physical exam results update the doctors prediction depends highly on whether or not an x-ray has already been performed. If the physical exam is done first, the results could dramatically influence the doctor's predicted probability of fracture. However, if the x-ray is done first, the subsequent physical exam might not make any marginal impact on the doctor's prediction.  Indeed, partly for this reason, physical exams are almost always administered <em>before</em> x-rays. However, the prevalence of different measurement orderings does not factor into the SHAP computation. Instead, SHAP determines the influence of the physical exam by averaging (1) the marginal influence of the exam if the exam is done first, and (2) the marginal influence of the exam if the x-ray is done first. <em>By placing equal weight on these two measurement orderings, SHAP can underestimate the value that physical exams tend to provide in practice.</em></p>
+<p>In the next section I'll introduce the SHAP procedure with a slightly more complex example of COVID-19 screening based on three hypothetical risk factors. I'll then introduce more detailed notation in order to discuss L&amp;L Theorem 1.</p>
+<p><em>Note: I reached out to the SHAP paper's authors and had several helpful discussions while writing this comment.</em></p>
+<!-- In the process of discussing Theorem 1, I'll also outline an interpretation of SHAP that relies more on statistical terminology and less on game theory terminology. -->
+
+<!-- In the process of discussing Theorem 1, I'll also present a slow walk-through of some of the notation in L&L. -->
+
+<h1><a name="basic-notation"></a> Introducing SHAP with a hypothetical example of predicting COVID-19 status</h1>
+<p>To introduce the basic idea of SHAP, I'll consider a hypothetical example of predicting COVID-19 status among health-care workers. Suppose that an analyst observes a health-care worker with the following three characteristics:</p>
+<ol type="A">
+  <li>no dry cough,</li> 
+  <li>fever present, and</li> 
+  <li>positive result on nasal swab test.</li> 
+</ol>
+
+<p>After seeing this information, the analyst assigns the health-care worker a 0.98 probability being infected.</p>
+<p>SHAP decomposes the 0.98 predicted probability into <em>components</em> associated with each of these three pieces of evidence (A, B &amp; C). I'll describe the SHAP procedure in more detail below. But, at a high level, in order to implement SHAP we'll need to know the risk prediction that the analyst would have made if only a subset of the above facts had been available. For example, suppose that<sup id="fnref:covPred"><a class="footnote-ref" href="#fn:covPred">1</a></sup></p>
+<ul>
+<li>when told no information, the analyst predicts a baseline probability of 0.10;</li>
+<li>when told only (A), the analyst predicts a 0.05 probability;</li>
+<li>when told only (B), the analyst predicts a 0.20 probability;</li>
+<li>when told only (C), the analyst predicts a 0.96 probability;</li>
+<li>when told only (A) &amp; (B), the analyst predicts a 0.15 probability;</li>
+<li>when told only (A) &amp; (C), the analyst predicts a 0.93 probability;</li>
+<li>when told only (B) &amp; (C), the analyst predicts a 0.99 probability; and</li>
+<li>when told all three facts, the analyst predicts a 0.98 probability.</li>
+</ul>
+<p>We can imagine that the analyst might learn facts (A), (B), and (C) in any of 6 possible orders: 
+<span style="color:#a6cee3"><strong>A-B-C</strong></span>, 
+<span style="color:#1f78b4"><strong>A-C-B</strong></span>, 
+<span style="color:#b2df8a"><strong>B-A-C</strong></span>, 
+<span style="color:#33a02c"><strong>B-C-A</strong></span>, 
+<span style="color:#fb9a99"><strong>C-A-B</strong></span>, or 
+<span style="color:#e31a1c"><strong>C-B-A</strong></span>. 
+For each order, we can consider how the analyst's risk prediction evolves as they learn more. For example, under the ordering <span style="color:#33a02c"><strong>B-C-A</strong></span>, the analyst's prediction moves from 10% (baseline) to 20% (B), then to 99% (B &amp; C), and then to 98% (A &amp; B &amp; C). All six possible trajectories are shown below.</p>
+<p><center><img src="blog_supplements/2020-SHAP/cube-p1.png" width="66%" class="center"></center></p>
+<p>For each trajectory, we can also compute the change in predictions when each piece of information is added. For example, again considering the <span style="color:#33a02c"><strong>B-C-A</strong></span> ordering, the marginal contribution of fever (B) is <span class="math">\(0.20 - 0.10 = 0.10\)</span>; the marginal contribution of the positive nasal swab (C) is <span class="math">\(0.99 - 0.20 = 0.79\)</span>; and the marginal contribution of no cough (A) is <span class="math">\(0.98 - 0.99 = -.01\)</span>. Below, we show the marginal change in predictions associated with adding each of the three pieces of information, as a function of measurement order.</p>
+<p><center><img src="blog_supplements/2020-SHAP/bars-p2.png" width="66%" class="center"></center></p>
+<p>We can see from the plot above that the marginal contribution of the fever evidence is highly dependent on which measurements precede it. For example, if fever (B) is measured first, followed by the swab test (C), then the fever evidence increases our risk prediction by 0.10 (order <span style="color:#33a02c"><strong>B-C-A</strong></span>). Alternatively, if we first see that a health-care worker has a positive swab test (C), and then see that they have a fever (B), then the marginal contribution of the fever evidence is only 0.03. In this ordering (<span style="color:#e31a1c"><strong>C-B-A</strong></span>), the swab test has already increased our predicted probability to almost 1, and there is little room left for the fever evidence to increase it further.</p>
+<p>The SHAP approach defines the overall contribution of a piece of evidence as the <em>average</em> change in prediction induced by measuring that piece of evidence, where the average is taken across all possible orderings. These averages are shown below. By construction, the sum of the SHAP components equals the original prediction of 0.98.</p>
+<p><center><img src="blog_supplements/2020-SHAP/shap-p3.png" width="66%" class="center"></center></p>
+<p>L&amp;L Theorem 1 claims that the SHAP approach is the only method that satisfies a certain set of intuitive conditions. In particular, the authors claim that this uniqueness holds even without a commonly used a "Symmetry" condition that requires the model explanation to not be influenced by external knowledge about either the problem domain or the order in which variables tend to be measured (<a href="#background">details below</a>).</p>
+<p><em>The primary purpose of this comment is to point out that this theorem is in error.</em> If external knowledge is allowed to influence the model explanation, then <em>taking <strong>any weighted combination</strong> over the orderings will still satisfy the same set of intuitive conditions in Theorem 1.</em> For example, in the COVID-19 scenario discussed here, it may be known a priori that nasal swabs are rarely collected before a fever or cough checks. Thus, analysts might wish to downweight measurement orderings that start with a swab test. Doing so would still satisfy the Theorem 1 conditions, as written. In contrast, giving equal weight to orderings that start with a swab test could lead us to <em>underestimate the practical value of fever and cough checks</em>, as these checks only add substantial value when collected first.</p>
+<p>In the next section, I'll introduce notation that will let us make this argument more specific. I'll then review L&amp;L Theorem 1, and formally state the counterclaim that any weighted combination of feature orderings satisfies the same Theorem 1 conditions. I'll close by discussing some implications.</p>
+<p>For context, it is important to mention that there is open debate on how transparency in machine learning should be formalized (<a href="https://arxiv.org/abs/1706.07269" target="_blank">Miller, 2017</a>;
+<a href="https://arxiv.org/abs/2004.11440" target="_blank">Ray Hong et al., 2020</a>), 
+and on whether or not the formalization employed in SHAP has an actionable interpretation (<a href="https://arxiv.org/abs/1911.02508" target="_blank">Slack et al. (2019)</a>; <a href="https://arxiv.org/abs/1908.08474" target="_blank">Sundararajan &amp; Najmi, 2019</a>; 
+<a href="https://arxiv.org/abs/2002.11097" target="_blank">Kumar et al., 2020</a>
+). These broader questions are beyond the scope of this comment.</p>
+<h1><a name="basic-notation"></a> Notation</h1>
+<p>Here I'll introduce notation to denote input features for a model, and orderings for those features. I'll simplify away some of L&amp;L's notation that is used to compare SHAP with other methods in the literature, and that isn't strictly needed for the L&amp;L Theorem 1 statement. I'll also slightly modify some of L&amp;L's notation with the goal of allowing clearer discussion. For readers interested in making a side-by-side comparison, a more detailed exposition is <a href="#adv-notation">in Appendix 2</a>.</p>
+<p>Let <span class="math">\(\mathbf{Z}\in \mathbb{R}^m\)</span> be an <span class="math">\(m\)</span>-length random vector denoting inputs to a prediction model <span class="math">\(f:\mathbb{R}^m\rightarrow\mathbb{R}\)</span>, and let <span class="math">\(\mathbf{z}\)</span> denote realizations of <span class="math">\(\mathbf{Z}\)</span>. For any vector <span class="math">\(\mathbf{a}\)</span>, let <span class="math">\(\mathbf{a}_i\)</span> denote it's <span class="math">\(i^{th}\)</span> element. Let <span class="math">\(\delta^{(j)}\)</span> be an <span class="math">\(m\)</span>-length vector with <span class="math">\(1\)</span> in the <span class="math">\(j^{th}\)</span> position and zeros elsewhere, and let <span class="math">\(\delta^{(0)}\)</span> be an <span class="math">\(m\)</span>-length vector of zeros. That is, <span class="math">\(\delta^{(j)}_i=1(i=j)\)</span>, where <span class="math">\(1\)</span> is the indicator function.</p>
+<p>Recall that in the COVID-19 example above, we considered settings where analysts had to make predictions based on only partial information. For example, when told only that a health-care worker had a fever, the analyst predicted a 20% probability of infection. </p>
+<p>From here on, we will represent partial information by allowing <span class="math">\(\mathbf{Z}\)</span>  to be partially censored. Let <span class="math">\(\mathbf{O} \in \{0,1\}^m\)</span> be the random variable such that <span class="math">\(\mathbf{O}_i=1\)</span> if the <span class="math">\(i^{th}\)</span> element of <span class="math">\(\mathbf{Z}\)</span> is observed, and <span class="math">\(\mathbf{O}_i=0\)</span> if it is censored. Let <span class="math">\(\mathbf{o}\)</span> denote realizations of <span class="math">\(\mathbf{O}\)</span>. Let <span class="math">\((\mathbf{z}^{\text{new}},\mathbf{o}^{\text{new}})\)</span> be a new observation of interest, where <span class="math">\(\mathbf{o}^{\text{new}}=\mathbf{1}_m\)</span> is an <span class="math">\(m\)</span>-length vector of ones representing no censoring, and <span class="math">\(\mathbf{z}^{\text{new}}\)</span> is an input for which we want to explain the prediction <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span>. In other words, we aim to explain a prediction, <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span>, that was made under full information, <span class="math">\(\mathbf{o}^{\text{new}}=\mathbf{1}_m\)</span>.</p>
+<p>To describe what <em>would have happened</em> if only partial information had been observed, let <span class="math">\(f_{\mathbf{z}^{\text{new}}}(\mathbf{o})\)</span> represent the prediction that <em>would have been made</em> if only the subset of information <span class="math">\(\{ \mathbf{z}_{i}^{new} \, :\, \mathbf{o}_i=1\}\)</span> had been available, where <span class="math">\(f_{\mathbf{z}^{\text{new}}}\)</span>  is a function from <span class="math">\(\{0,1\}^m \rightarrow \mathbb{R}\)</span>. For example, L&amp;L choose to define <span class="math">\(f_{\mathbf{z}^{\text{new}}}(\mathbf{o})\)</span> by assuming that the prediction model <span class="math">\(f\)</span> includes some kind of subroutine for imputing the censored values <span class="math">\(\{ \mathbf{z}_{i}^{new} \, :\, \mathbf{o}_i=0\}\)</span>. It follows from this interpretation that <span class="math">\(f_{\mathbf{z}^{\text{new}}}(\mathbf{1}_m)=f(\mathbf{z}^{\text{new}})\)</span>. Or, in words, we know that the prediction that would have been produced from full information (<span class="math">\(f_{\mathbf{z}^{\text{new}}}(\mathbf{1}_m)\)</span>) must equal the prediction that actually occurred (<span class="math">\(f(\mathbf{z}^{\text{new}})\)</span>). In L&amp;L Theorem 1, any function <span class="math">\(f_{\mathbf{z}^{\text{new}}}:\{0,1\}^m \rightarrow \mathbb{R}\)</span>  may be chosen so long as <span class="math">\(f_{\mathbf{z}^{\text{new}}}(\mathbf{1}_m)=f(\mathbf{z}^{\text{new}})\)</span> (see <a href="#adv-notation">Appendix 2</a>). I'll refer to <span class="math">\(f_{\mathbf{z}^{\text{new}}}\)</span> as a "partial information" function.</p>
+<p>I'll denote the set of all <span class="math">\(m!\)</span> possible input feature orderings by <span class="math">\(\mathcal{R}_m\)</span>. Given an ordering <span class="math">\(\mathbf{r} \in \mathcal{R}_m\)</span>, I'll use <span class="math">\(\Delta^{(\mathbf{r},i)}\)</span> to represent the set of variables measured before <span class="math">\(\mathbf{z}_i\)</span> in the ordering <span class="math">\(\mathbf{r}\)</span>. Specifically, let <span class="math">\(\Delta^{(\mathbf{r},i)}\)</span> be the binary vector where <span class="math">\(\Delta^{(\mathbf{r},i)}_j=1\)</span> if <span class="math">\(j\)</span> precedes <span class="math">\(i\)</span> in ordering <span class="math">\(\mathbf{r}\)</span>, and <span class="math">\(\Delta^{(\mathbf{r},i)}_j=0\)</span> otherwise. It follows that <span class="math">\(\Delta^{(\mathbf{r},i)}+\delta^{(i)}\)</span> represents the variables indices that precede <span class="math">\(i\)</span> in the ordering <span class="math">\(\mathbf{r}\)</span> <em>as well as</em> <span class="math">\(i\)</span> itself. As an example to reinforce this notation, let's consider the case where <span class="math">\(m=3\)</span>. Here, we have 
+</p>
+<div class="math">$$ \mathcal{R}_3=\{(1,2,3), (1,3,2), (2,1,3), (2,3,1), (3,1,2), (3,2,1)\}.$$</div>
+<p>
+Above, the ordering <span class="math">\((3,1,2)\)</span> indicates that <span class="math">\(z_3\)</span> is observed first, followed by <span class="math">\(z_1\)</span>, followed by <span class="math">\(z_2\)</span>. Continuing this example, if we set <span class="math">\(\mathbf{r}=(3,1,2)\)</span>, then</p>
+<ul>
+<li><span class="math">\(\Delta^{(\mathbf{r},1)} = (0,0,1)\)</span> indicates that only <span class="math">\(z_3\)</span> is measured before <span class="math">\(z_1\)</span> in the ordering <span class="math">\(\mathbf{r}=(3,1,2)\)</span>;</li>
+<li><span class="math">\(\Delta^{(\mathbf{r},2)} = (1,0,1)\)</span> indicates that <span class="math">\(z_1\)</span> and <span class="math">\(z_3\)</span> are measured before <span class="math">\(z_2\)</span> in the ordering <span class="math">\(\mathbf{r}=(3,1,2)\)</span>; and</li>
+<li><span class="math">\(\Delta^{(\mathbf{r},3)} = (0,0,0)\)</span> indicates that no variables are measured before <span class="math">\(z_3\)</span> in the ordering <span class="math">\(\mathbf{r}=(3,1,2)\)</span>.</li>
+</ul>
+<p>This notation will let us describe how predictions change as more and more information is acquired, in different orders.</p>
+<p>As an aside, L&amp;L also consider a case where <span class="math">\(\mathbf{o}^{\text{new}}\)</span> can contain zeros, but it will turn out that we can simplify notation without substantively changing the Theorem 1 result if we assume <span class="math">\(\mathbf{o}^{\text{new}}=\mathbf{1}_m\)</span>. Similarly, L&amp;L consider an alternate interpretation where <span class="math">\(\mathbf{O}\)</span> may represent arbitrary "simplified" summaries of <span class="math">\(\mathbf{Z}\)</span>, but this alternative interpretation does not change the formal result in Theorem 1. Both of these topics are discussed in more detail in <a href="#adv-notation">Appendix 2</a>. </p>
+<h1><a name="Thm1"></a> L&amp;L Theorem 1 statement</h1>
+<p>Our goal is to choose a set of functions <span class="math">\(\{\phi_1,\dots ,\phi_m\}\)</span> to decompose the prediction <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span> into components associated with each of the <span class="math">\(m\)</span> features. Specifically, let <span class="math">\(\phi_i(f_{\mathbf{z}^{\text{new}}})\)</span> be a real number representing the component of the prediction <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span> assigned to the <span class="math">\(i^{th}\)</span> observed input feature, <span class="math">\(\mathbf{z}_i^{\text{new}}\)</span>. The value of <span class="math">\(\phi_j(f_{\mathbf{z}^{\text{new}}})\)</span> may be positive or negative, with negative values roughly interpreted as saying that "in the process of measuring more and more inputs and producing increasingly refined predictions, observing that <span class="math">\(\mathbf{Z}_j=\mathbf{z}_j^{\text{new}}\)</span> tends to reduce our intermediate predictions."</p>
+<p>L&amp;L Theorem 1 claims that, given <span class="math">\(f_{z^{\text{new}}}\)</span>, there is only one set of allocation functions <span class="math">\(\{\phi_1,\dots ,\phi_m\}\)</span> that satisfies two specific conditions.<sup id="fnref:thirdcond"><a class="footnote-ref" href="#fn:thirdcond">2</a></sup></p>
+<p><em><strong>L&amp;L Theorem 1:</strong><a name="thm1"></a> 
+Given a partial information function <span class="math">\(f_{z^{\text{new}}}:\{0,1\}^m\rightarrow \mathbb{R}\)</span> satisfying <span class="math">\(f_{z^{\text{new}}}(\mathbf{1}_m)=f(\mathbf{z}^{\text{new}})\)</span>, there is only one set of functions <span class="math">\(\{\phi_1(f_{\mathbf{z}^{\text{new}}}),\dots ,\phi_m(f_{\mathbf{z}^{\text{new}}}) \}\)</span> that satisfy the following 2 properties.</em></p>
+<ol>
+<li><em>(Local Accuracy) <span class="math">\(f(\mathbf{z}^{\text{new}}) = f_{z^{\text{new}}}(\mathbf{0}_m) + \sum_{i=1}^m \phi_i(f_{\mathbf{z}^{\text{new}}})\)</span>, where <span class="math">\(\mathbf{0}_m\)</span> is an <span class="math">\(m\)</span>-length vector of zeros and <span class="math">\(f_{z^{\text{new}}}(\mathbf{0}_m)\)</span> represents the baseline prediction. That is, the components <span class="math">\(\phi_i(f_{\mathbf{z}^{\text{new}}})\)</span> add up to the original prediction <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span>.</em></li>
+<li><em>(Consistency) Let <span class="math">\(\mathbf{o}\setminus i = \mathbf{o}(1-\delta^{(i)})\)</span> denote setting the <span class="math">\(i^{th}\)</span> element of <span class="math">\(\mathbf{o}\)</span> to zero. For any two models <span class="math">\(f\)</span> and <span class="math">\(\tilde{f}\)</span> with associated partial information functions <span class="math">\(f_{z^{\text{new}}}\)</span> and <span class="math">\(\tilde{f}_{\mathbf{z}^{\text{new}}}\)</span> respectively,  if</em>
+<div class="math">\begin{equation*}
+\tilde{f}_{\mathbf{z}^{\text{new}}}(\mathbf{o})-\tilde{f}_{\mathbf{z}^{\text{new}}}(\mathbf{o}\setminus i) \geq f_{z^{\text{new}}}(\mathbf{o}) - f_{z^{\text{new}}}(\mathbf{o}\setminus i)
+\end{equation*}</div>
+<em>for all <span class="math">\(\mathbf{o}\in\{0,1\}^m\)</span>, then <span class="math">\(\phi_i(\tilde{f}_{\mathbf{z}^{\text{new}}})\geq \phi_i(f_{\mathbf{z}^{\text{new}}})\)</span>. In words, this means that if the prediction strategy (<span class="math">\(f_{\mathbf{z}^{\text{new}}}\)</span>) changes in such a way that the update caused by learning <span class="math">\(\mathbf{Z}_i=\mathbf{z}^{\text{new}}_i\)</span> does not decrease, then the <span class="math">\(i^{th}\)</span> prediction component does not decrease.</em></li>
+</ol>
+<p><em>The unique set of functions that satisfies the above conditions is equal to</em><sup id="fnref:eq1form"><a class="footnote-ref" href="#fn:eq1form">3</a></sup>
+</p>
+<div class="math">\begin{align}
+\label{shap-def}
+\phi_i(f_{\mathbf{z}^{\text{new}}})=&amp;\frac{1}{m!}\sum_{\mathbf{r}\in\mathcal{R}_m}
+ f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)} + \delta^{(i)}\right)-f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)}\right).
+\end{align}</div>
+<p>In Eq (<span class="math">\(\ref{shap-def}\)</span>), the term in the summation is the change in predictions caused by adding <span class="math">\(\mathbf{z}_i\)</span> within the ordering <span class="math">\(\mathbf{r}\)</span>. In light of this result, SHAP decomposes predictions using Eq (<span class="math">\(\ref{shap-def}\)</span>).</p>
+<!-- In the next section, we'll see a set of solutions that all satsify the two conditions in L&L Theorem 1. This set comes from applying different weightings to the input orderings.
+ -->
+
+<!--
+
+# <a name="shap-stat"></a> An intuition for SHAP in the language of stats
+
+Because this comment is aimed at data scientists, it will be helpful to describe the SHAP algorithm in a way that avoids terminology from the game theory literature in favor of terminology from the statistics literature. 
+
+With this in mind, the SHAP allocation for the $i^{th}$ feature ($x_i$) at the prediction $f(\mathbf{z}^{\text{new}})$ can be written as the expected difference in model predictions for people who have a certain subset of features (S) in common with $\mathbf{z}^{\text{new}}$, compared against people who additionally have $x_i$ in common with $\mathbf{z}^{\text{new}}$. Here, expectations taken both over the feature subset $S$, and also over the distribution people of who share those feature values. In particular, the SHAP allocations in Eq ($\ref{shap-def}$) use a distribution for S that corresponds placing uniform weight on all orderings for how variables could be added (see L&L Figure 1).
+ -->
+
+<h1><a name="counter-statement"></a> Counterclaim to L&amp;L Theorem 1: any weights work</h1>
+<p>Eq (<span class="math">\(\ref{shap-def}\)</span>) defines the component of the prediction associated with the <span class="math">\(i^{th}\)</span> feature by averaging over all possible feature orderings, <em>giving each ordering equal weight</em>. However, the conditions in L&amp;L can actually be satisfied by <em>any</em> weighting scheme for the feature orderings. This can be formalized as follows.</p>
+<p><em><strong>Counterclaim</strong>: Let <span class="math">\(w:\mathcal{R}_m\rightarrow \mathbb{R}\)</span> be a weighting function  satisfying <span class="math">\(\sum_{\mathbf{r}\in \mathcal{R}_m} w(\mathbf{r}) = 1\)</span> and <span class="math">\(w(\mathbf{r})\geq 0\)</span> for all <span class="math">\(\mathbf{r}\in \mathcal{R}_m\)</span>. Given any such weighting function, the decomposition functions <span class="math">\(\{\bar{\phi}_{1}^{(w)},\dots,\bar{\phi}_{m}^{(w)}\}\)</span> defined as</em> 
+</p>
+<div class="math">\begin{align}
+\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})&amp;=
+\sum_{\mathbf{r}\in\mathcal{R}_m} w(\mathbf{r}) \left\{
+ f_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)} + \delta^{(i)})-f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)}\right)
+ \right\}\label{dist-def}
+\end{align}</div>
+<p>
+<em>also satisfy the Local Accuracy and Consistency conditions in L&amp;L Theorem 1.</em></p>
+<p>(Proof in <a href="#proof">Appendix 1</a>.)</p>
+<p>Eq (<span class="math">\(\ref{dist-def}\)</span>) can also be interpreted as treating the order <span class="math">\(\mathbf{r}\)</span> as a random vector following the distribution implied by <span class="math">\(w\)</span>, and viewing <span class="math">\(\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})\)</span> as the <em>expected</em> change in predictions when the information <span class="math">\(\mathbf{Z}_i=\mathbf{z}^{\text{new}}_i\)</span> is learned. Setting <span class="math">\(w(\mathbf{r})=\frac{1}{m!}\)</span> (i.e., a uniform distribution over orderings) produces the solution in Eq (<span class="math">\(\ref{shap-def}\)</span>).
+But, again, any weighting scheme can be used while still maintaining the conditions in Theorem 1. </p>
+<h1>Discussion</h1>
+<p>When discussing L&amp;L Theorem 1, it's helpful to review some of the background literature that inspired SHAP. In the remainder of this comment I'll review this background and also discuss some general, open questions.</p>
+<h2><a name="background"></a> Background on SHAP, Shapley values, and the "Symmetry" condition</h2>
+<p>As the name suggests, the SHapley values for Additive exPlanations (SHAP) method is based on the <em>Shapley value</em> framework, a well-known concept from the game theory literature.<sup id="fnref:shapname"><a class="footnote-ref" href="#fn:shapname">4</a></sup> The Shapley value framework was originally introduced in 1951 as a way to take the proceeds generated by a team and fairly distribute those proceeds to the team members. This question of how to allocate proceeds is nontrivial, especially when the total value produced by a collaborative team is different from the sum of the values that each team member would produce alone. If the cost of recruiting each individual team member can be incorporated into the net value produced by the team, then it follows that the order in which team members are recruited should not be seen as particularly important. For this reason, the Shapley value solution for distributing payments effectively ignores the order in which players are added to a team. As a result, the method uniquely satisfies three specific fairness criteria, which can be roughly described as<!--  (for more formal definitions, see Theorem 1 <a href="#Thm1">below</a>) --></p>
+<ol>
+<li><a name="shapley-conditions"></a>(Efficiency) the sum of payments equals the total value generated by the team;</li>
+<li>(Monotonicity) if the task assigned to the team changes in such a way that the marginal contribution of the <span class="math">\(i^{th}\)</span> member to any subteam does not decrease, then the payout to the <span class="math">\(i^{th}\)</span> member will not decrease;<sup id="fnref:mono"><a class="footnote-ref" href="#fn:mono">5</a></sup></li>
+<li>(Symmetry) any 2 members who are equivalent, in that they make the same marginal contributions to any subteam, are payed equally. </li>
+</ol>
+<p><a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">L&amp;L, 2017</a> showed that the Shapley value framework can also be applied to explain a black-box model's predictions. L&amp;L interpret the set of input features as team members producing a prediction, and use the Shapley value framework to decompose this prediction into components associated with each of the inputs. In this context, <em>Efficiency</em> can be written as <em>Local Accuracy</em>; <em>Monotonicity</em> can be written as <em>Consistency</em> (L&amp;L Theorem 1); and <em>Symmetry</em> can be written as saying that two inputs (<span class="math">\(i,j\)</span>) must be assigned the same decomposition value if they make the same marginal contribution to any subset of other inputs.
+<!-- <div class="math">\begin{equation}
+\label{Symmetry}
+\max_{ \left\{ 
+i,j\in\{1,\dots,m\}, \, \mathbf{o}\in\{0,1\}^m\,:\,\mathbf{o}_i=\mathbf{o}_j=0
+\right\} }
+\left|f_{z^{\text{new}}}(\mathbf{o}+\delta_i) - f_{z^{\text{new}}}(\mathbf{o}+\delta_j) \right| = 0 \implies \phi_i(f_{\mathbf{z}^{\text{new}}})=\phi_j(f_{\mathbf{z}^{\text{new}}}). 
+\end{equation}</div> -->
+That is,  if 
+<span class="math">\(f_{z^{\text{new}}}(\mathbf{o}+\delta_i) = f_{z^{\text{new}}}(\mathbf{o}+\delta_j)\)</span> 
+for all 
+<span class="math">\(\mathbf{o}\in\{0,1\}^m\)</span> 
+such that 
+<span class="math">\(\mathbf{o}_i=\mathbf{o}_j=0\)</span>, 
+then <span class="math">\(\phi_i(f_{\mathbf{z}^{\text{new}}})=\phi_j(f_{\mathbf{z}^{\text{new}}})\)</span>.</p>
+<p>It follows from the literature on the Shapley value framework that, given a partial information function <span class="math">\(f_{\mathbf{z}^{\text{new}}}\)</span>, the conditions of Local Accuracy, Consistency &amp; Symmetry are sufficient to identify a unique decomposition of the prediction <span class="math">\(f(\mathbf{z}^{\text{new}})\)</span>. Thus, L&amp;L Theorem 1 can be read as saying that Symmetry is not required in the context of explaining predictions, and that Efficiency and Monotonicity are sufficient to uniquely identify a way to decompose those predictions. The error in L&amp;L Theorem 1 occurs in Line (9) of the proof (see <a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">L&amp;L supplement</a>). This line only follows under an implicit "Anonymity" condition  that the names of input variables cannot affect the explanation. This implicit condition has previously been shown to be stronger than Symmetry (see <a href="https://books.google.com/books/about/Game_Theory.html?id=xCnMCQAAQBAJ#:~:text=This%20textbook%20presents%20the%20basics,theory%2C%20including%20cooperative%20game%20theory." target="_blank">Peters, 2008: pages 245 &amp; 257</a>).</p>
+<p>It's also worth noting that the Symmetry condition has a clearer justification in the game theory setting, where the cost of recruiting a team member can be directly added to the total net value produced by the team. Again, once the cost of recruiting each team member has been accounted for, the order in which members are recruited can reasonably be described as arbitrary. In contrast, the cost of measuring a prediction model input cannot be "added" to the prediction produced by all of the inputs together, as the measurement cost and final prediction are on different scales (e.g., dollars versus probability of infection). In the context of prediction models, the measurement order often reflects the measurement costs.</p>
+<p>In the context of the explainability literature, SHAP's attention to sequential measurement distinguishes it from many other existing methods, 
+such as dropping a variable and retraining (see 
+<a href="https://www.sciencedirect.com/science/article/abs/pii/S0304380002002570" target="_blank">Gevrey et al., 2003</a>),  permutation-based methods 
+(<a href="https://projecteuclid.org/euclid.ss/1009213726">Breiman, 2001</a>; <a href="https://jmlr.org/papers/v20/18-760.html">Fisher et al., 2019</a>), 
+or partial dependence plots 
+(<a href="https://www.jstor.org/stable/2699986">Friedman, 2001</a>; see also <a href="https://doi.org/10.1080/10618600.2014.907095">Goldstein, 2017</a>). 
+These alternative methods study how a model's behavior changes when <em>only</em> the variable of interest is altered or censored. In contrast, SHAP studies how a model's predictions change when <em>all variables are censored sequentially</em> (or, equivalently, when they are measured sequentially). This conceptual distinction leads to the Local Accuracy property of SHAP,<!-- [^addAcc] --> a property that is not shared by the other methods mentioned above.</p>
+<!-- [^addAcc]: The "Local Accuracy" property is sometimes referred to as "Additivity," (see [Theorem 1](#thm1) and [the discussion section](#background)).
+ -->
+
+<!-- gradient-based methods (see Sundararajan et al. (2017), Koh Liang?) ([https://arxiv.org/pdf/1910.13413.pdf){:target="_blank"}),  -->
+
+<h2><a name="discussion"></a> General discussion, and remaining open questions</h2>
+<p>We've seen that the conditions in L&amp;L Theorem 1 are maintained even after reweighting the SHAP formula (Eq (<span class="math">\(\ref{shap-def}\)</span>)) using any weighting scheme, or probability distribution, over input feature orderings. This means that in order for the SHAP decomposition to be uniquely defined, a researcher must choose not only a function <span class="math">\(f_{z^{\text{new}}}\)</span> to assign values to subsets of inputs (<a href="https://arxiv.org/abs/1908.08474" target="_blank">Sundararajan &amp; Najmi, 2019</a>), but also a weighting function <span class="math">\(w\)</span> over the order in which inputs are measured. </p>
+<p>Requiring a Symmetry condition collapses this choice to uniform weights (Eq (<span class="math">\(\ref{shap-def}\)</span>)), but it is not obvious that uniform weights are ideal when external knowledge is available. <a href="https://arxiv.org/abs/1910.06358" target="_blank">Frye et al. (2019)</a> make a similar point about choosing a distribution over orderings, and argue that such a choice should reflect known causal structure. Alternatively, the order might reflect how expensive each feature is to measure (see also <a href="http://proceedings.mlr.press/v54/lakkaraju17a.html" target="_blank">Lakkaraju &amp; Rudin, 2017</a>). </p>
+<p>That said, there are still scenarios where equal weights can be a reasonable default choice. For example, when debugging a model it can be useful to explore a variety of explanatory methods, including SHAP (with equal weights or unequal weights), partial dependence plots, permutation importance, and more. Each method provides a new chance to understand when and why the model performs poorly.</p>
+<!-- While we've shown here that any choice of $P$ leads to a solution to L&L Theorem 1, via Eq ($\ref{dist-def}$),  -->
+
+<p>One potential future question is whether or not all solutions to L&amp;L Theorem 1 take the form of Eq (<span class="math">\(\ref{dist-def}\)</span>). Another open question is whether there are variations of the Symmetry condition that imply different choices for <span class="math">\(w\)</span>. On the other hand, it might be more straightforward for a researcher to choose a partial information function <span class="math">\(f_{z^{\text{new}}}\)</span> and weighting function <span class="math">\(w\)</span>, and then define the decomposition method as a function of <span class="math">\(f_{z^{\text{new}}}\)</span> &amp; <span class="math">\(w\)</span> using Eq (<span class="math">\(\ref{dist-def}\)</span>). That is, it might be easier for researchers to choose a weighting function <span class="math">\(w\)</span> than to identify a variation of the Symmetry requirement that uniquely determines <span class="math">\(w\)</span>. </p>
+<hr>
+<!-- 
+For reference
+https://www.alexdamour.com/blog/public/2018/05/18/non-identification-in-latent-confounder-models/
+ -->
+
+<h2><a name="proof"></a> Appendix 1: Proof of counterclaim</h2>
+<p>I'll start by showing that the Theorem 1 conditions can also be satisfied by a decomposition that depends on only one feature ordering. It will follow that any weighting scheme (or distribution) over feature orderings also satisfies the Theorem 1 conditions.</p>
+<h3><a name="counter1"></a> A counter example from one feature ordering</h3>
+<p>Let <span class="math">\(\mathbf{r}\in \mathcal{R}_m\)</span> be an arbitrary ordering of the inputs, and let</p>
+<div class="math">\begin{align}
+\bar{\phi}_{\mathbf{r},i}(f_{\mathbf{z}^{\text{new}}})=
+f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)} + \delta^{(i)}\right)-f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)}\right).
+\label{oneR}
+\end{align}</div>
+<p>The right-hand side of Eq (<span class="math">\(\ref{oneR}\)</span>) can be read as saying "within the ordering <span class="math">\(\mathbf{r}\)</span>, we compare the prediction made from the inputs up to and including <span class="math">\(\mathbf{z}_i\)</span> against the prediction made based only on the inputs measured strictly before <span class="math">\(\mathbf{z}_i\)</span>."</p>
+<p>For Property 1 (Local Accuracy), we see that</p>
+<div class="math">\begin{align}
+&amp;f_{\mathbf{z}^{\text{new}}}(\mathbf{0}_m)+\sum_{j=1}^{m} \bar{\phi}_{\mathbf{r},j}(f_{\mathbf{z}^{\text{new}}}) \nonumber  \\
+&amp;=f_{\mathbf{z}^{\text{new}}}(\mathbf{0}_m)+\sum_{i=1}^{m} \bar{\phi}_{\mathbf{r},\mathbf{r}_i}(f_{\mathbf{z}^{\text{new}}})   \label{reorder} \\
+&amp;=f_{\mathbf{z}^{\text{new}}}(\mathbf{0}_m)+\sum_{i=1}^{m}\left\{ f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}+\delta^{(\mathbf{r}_i)}\right)-f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}\right)\right\}   \nonumber \\
+&amp;=f_{\mathbf{z}^{\text{new}}}(\mathbf{0}_m)+\sum_{i=1}^{m} f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}+\delta^{(\mathbf{r}_i)}\right)-\sum_{i=2}^{m}f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}\right)  -f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_1)}\right)   \nonumber \\
+&amp;=\sum_{i=1}^{m} f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}+\delta^{(\mathbf{r}_i)}\right)-\sum_{i=2}^{m}f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}\right) \label{zeroM} \\
+&amp;=\sum_{i=1}^{m} f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}+\delta^{(\mathbf{r}_i)}\right)-
+\sum_{i=2}^{m}f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_{i-1})}+\delta^{(\mathbf{r}_{i-1})}\right) \label{backup} \\
+&amp;=\sum_{i=1}^{m} f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_i)}+\delta^{(\mathbf{r}_i)}\right)-
+\sum_{i=1}^{m-1}f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_{i})}+\delta^{(\mathbf{r}_{i})}\right) \nonumber  \\
+&amp;= f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},\mathbf{r}_m)}+\delta^{(\mathbf{r}_m)}\right) \nonumber  \\
+&amp;= f_{\mathbf{z}^{\text{new}}}\left(\mathbf{1}_m\right) \nonumber  \\
+&amp;= f(\mathbf{z}^{\text{new}}). \nonumber  \\
+\end{align}</div>
+<p>Above, Line (<span class="math">\(\ref{reorder}\)</span>) comes from reordering the summation terms. Line (<span class="math">\(\ref{zeroM}\)</span>) comes from the fact that <span class="math">\(\Delta^{(\mathbf{r},\mathbf{r}_1)}=\mathbf{0}_m\)</span>, as no variables occur before <span class="math">\(\mathbf{r}_1\)</span> in the ordering <span class="math">\(\mathbf{r}\)</span>. Line <span class="math">\((\ref{backup})\)</span> comes from the fact that <span class="math">\(\Delta^{(\mathbf{r},\mathbf{r}_i)}=\Delta^{(\mathbf{r},\mathbf{r}_{i-1})}+\delta^{(\mathbf{r}_{i-1})}\)</span> for <span class="math">\(1&lt; i\leq m\)</span>, that is, the integers preceding the <span class="math">\(\mathbf{r}_i\)</span> in order <span class="math">\(\mathbf{r}\)</span> are equal to the integers preceding <span class="math">\(\mathbf{r}_{i-1}\)</span> as well as <span class="math">\(\mathbf{r}_{i-1}\)</span> itself.</p>
+<p>For Property 2 (Consistency), suppose we know that
+</p>
+<div class="math">\begin{equation*}
+\tilde{f}_{\mathbf{z}^{\text{new}}}(\mathbf{o})-\tilde{f}_{\mathbf{z}^{\text{new}}}(\mathbf{o}\setminus i) \geq f_{z^{\text{new}}}(\mathbf{o}) - f_{z^{\text{new}}}(\mathbf{o}\setminus i)
+\end{equation*}</div>
+<p>
+for all <span class="math">\(\mathbf{o}\in\{0,1\}^m\)</span>. We can apply the above relation at <span class="math">\(\mathbf{o}=\Delta^{(\mathbf{r},i)}+\delta^{(i)}\)</span> to get
+</p>
+<div class="math">\begin{align*}
+\bar{\phi}_{\mathbf{r},i}(\tilde{f}_{\mathbf{z}^{\text{new}}})
+&amp;=\tilde{f}_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}+\delta^{(i)})-\tilde{f}_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}) \\
+&amp;=\tilde{f}_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}+\delta^{(i)})-\tilde{f}_{\mathbf{z}^{\text{new}}}((\Delta^{(\mathbf{r},i)}+\delta^{(i)})\setminus i)\hspace{1cm}\text{ since } (\Delta^{(\mathbf{r},i)}+\delta^{(i)})\setminus i=\Delta^{(\mathbf{r},i)} \\
+&amp;\geq f_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}+\delta^{(i)})-f_{\mathbf{z}^{\text{new}}}((\Delta^{(\mathbf{r},i)}+\delta^{(i)})\setminus i) \\
+&amp;= f_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}+\delta^{(i)})-f_{\mathbf{z}^{\text{new}}}(\Delta^{(\mathbf{r},i)}) \\
+&amp;=\bar{\phi}_{\mathbf{r},i}(f_{\mathbf{z}^{\text{new}}}).
+\end{align*}</div>
+<p>Thus, <span class="math">\(\bar{\phi}_{\mathbf{r},i}(f_{\mathbf{z}^{\text{new}}})\)</span> satisfies the conditions in L&amp;L Theorem 1, but is not equal to <span class="math">\(\phi_{i}(f_{\mathbf{z}^{\text{new}}})\)</span> (see Eq (<span class="math">\(\ref{shap-def}\)</span>)), and so these conditions are not sufficient to identify a unique set of decomposition functions. Note however that <span class="math">\(\bar{\phi}_{\mathbf{r},i}(f_{\mathbf{z}^{\text{new}}})\)</span> does not satisfy the Symmetry condition (see <a href="#background">background section, above</a>), and so would not contradict Theorem 1 if a Symmetry condition was added to Theorem 1.</p>
+<h3><a name="counter-dist"></a> Generalizing the counter example to weight all possible orderings</h3>
+<p>Building on the previous section, we'll now treat the weighting scheme <span class="math">\(w\)</span> as a discrete probability distribution over all possible orderings. That is, we'll say that <span class="math">\(P(\mathbf{R}=\mathbf{r})=w(\mathbf{r})\)</span>, where <span class="math">\(\mathbf{R}\in \mathcal{R}_m\)</span> is a random ordering. This means that, given <span class="math">\(w\)</span>, the function <span class="math">\(\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})\)</span> is the expected value of <span class="math">\(\bar{\phi}_{\mathbf{R},i}(f_{\mathbf{z}^{\text{new}}})\)</span> (see Eq (<span class="math">\(\ref{oneR}\)</span>)) with <span class="math">\(\mathbf{R}\)</span> following the distribution implied by <span class="math">\(w\)</span>. </p>
+<p>It now follows from linearity of expectations that <span class="math">\(\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})\)</span> satisfies Local Accuracy. Similarly, it follows from monotonicity of expectations that <span class="math">\(\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})\)</span> satisfies Consistency. Thus, <span class="math">\(\bar{\phi}_{i}^{(w)}(f_{\mathbf{z}^{\text{new}}})\)</span> satisfies the conditions in L&amp;L Theorem 1.</p>
+<h2><a name="adv-notation"></a> Appendix 2: More detailed notes on notation</h2>
+<p>Much of the notation from L&amp;L is used to connect SHAP with other methods in the literature, and isn't strictly needed for the topics discussed here. For readers looking at this comment side-by-side with L&amp;L, this section lists the notation simplifications and changes I've made throughout this comment.</p>
+<p>First, the change that is perhaps most immediately noticeable is that L&amp;L use the notation <span class="math">\(z\)</span> to denote the random inputs to <span class="math">\(f\)</span>, and use <span class="math">\(x\)</span> to denote the realization of <span class="math">\(z\)</span> for which we would like to explain the prediction. That is, L&amp;L aim to explain the prediction <span class="math">\(f(x)\)</span>. I've replaced <span class="math">\(z\)</span> and <span class="math">\(x\)</span> with <span class="math">\(\mathbf{Z}\)</span> and <span class="math">\(\mathbf{z}^{\text{new}}\)</span> respectively, based on the <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function" target="_blank">style</a> of upper case letters for random variables and lower case letters for realizations of those random variables.</p>
+<p>Second, I've used the notation <span class="math">\(\phi_i(f_{\mathbf{z}^{\text{new}}})\)</span> to refer to what L&amp;L write as <span class="math">\(\phi_i(f,x)\)</span>. L&amp;L's notation implicitly assumes a fixed mapping from <span class="math">\(f\)</span> and <span class="math">\(x\)</span> to <span class="math">\(f_x\)</span>. However, many such mappings could be justified, and L&amp;L end up considering more than one (see L&amp;L page 5). My notation here is motivated by the fact that the functions <span class="math">\(\phi_i\)</span> do not depend on <span class="math">\(f\)</span> except through  <span class="math">\(f_{\mathbf{z}^{\text{new}}}\)</span>. This fact is especially relevant to the "Consistency" condition.</p>
+<p>L&amp;L also often abbreviate the value <span class="math">\(\phi_i(f,x)\)</span> as simply <span class="math">\(\phi_i\)</span>, and abbreviate the full set of functions <span class="math">\(\{\phi_1,\dots ,\phi_m \}\)</span> by nesting them within a function denoted by <span class="math">\(g\)</span>. I've omitted these abbreviations in order to distinguish functions from the values they produce.</p>
+<p>Third, L&amp;L let <span class="math">\(\mathbf{Z}\)</span> itself contain missing values, whereas I've represented missingess with a separate variable <span class="math">\(\mathbf{O}\)</span>. Specifically, L&amp;L say that the random variable <span class="math">\(z\)</span> can contain missing elements, and use the notation <span class="math">\(z'\)</span> to flag these missing values. Here, the apostrophe in <span class="math">\(z'\)</span> is meant to represent a <em>summary function applied</em> to <span class="math">\(z\)</span>. Specifically, it represents a function that returns an <span class="math">\(m\)</span>-length vector of nonmissingness indicators, such that <span class="math">\(z'_i=0\)</span> when <span class="math">\(z_i\)</span> is missing and <span class="math">\(z'_i=1\)</span> otherwise (here, the order of operations is <span class="math">\(z_i'=(z')_i\)</span>). For example, if <span class="math">\(z=(3,\text{NA},4.1)\)</span> then <span class="math">\(z'=(3,\text{NA},4.1)'=(1,0,1)\)</span>, where here I've used <span class="math">\(\text{NA}\)</span> to redundantly represents a missing value. L&amp;L also consider a more general case where the apostrophe could represent any binary summary function applied to the random inputs <span class="math">\(z\)</span>, so long as there exists a reverse mapping <span class="math">\(h_{x}\)</span> satisfying <span class="math">\(h_x(z')=z\)</span> when <span class="math">\(z=x\)</span>. Note that the value of <span class="math">\(h_x(z')\)</span> is unconstrained when <span class="math">\(z \neq x\)</span>. That said, the core theorem statement is technically not affected by how <span class="math">\(z'\)</span> is interpreted. As an aside, the Local Accuracy &amp; Missingness properties of L&amp;L Theorem 1 become <a href="https://github.com/slundberg/shap/issues/175" target="_blank">arguably less intuitive</a> if <span class="math">\(x'_i\)</span> is interpreted as something other than a nonmissingness indicator.</p>
+<p>On a related note, I've also generally omitted the notation <span class="math">\(h_x\)</span> from this comment. In the context of L&amp;L Theorem 1, the mapping <span class="math">\(h_x\)</span> is used only as way to introduce <span class="math">\(f_x\)</span> (equivalently, <span class="math">\(f_{z^{\text{new}}}\)</span>) by defining it as <span class="math">\(f_x(z')=f(h_x(z'))\)</span>. This definition comes from L&amp;L Property 3 and L&amp;L Eq (5), although not all of the described choices for <span class="math">\(f_x\)</span> strictly satisfy this definition (see the relation that <span class="math">\(f_x(z')=E(f(z)|z_S)\)</span> at the top of L&amp;L page 5). Since <span class="math">\(h_x\)</span> does not appear elsewhere in the theorem, we can omit this notation if we translate the constraints on <span class="math">\(h_x\)</span> into constraints on <span class="math">\(f_x\)</span>. Specifically, if <span class="math">\(f\)</span> can produce any number on the real line and <span class="math">\(h_x\)</span> is unconstrained except for the requirement that <span class="math">\(h_x(x')=x\)</span>, then <span class="math">\(f_x\)</span> is unconstrained except for the requirement that <span class="math">\(f_x(x')=f(h_x(x'))=f(x)\)</span>. Equivalently, <span class="math">\(f_{z^{\text{new}}}\)</span> is unconstrained except for the requirement that <span class="math">\(f_{z^{\text{new}}}(\mathbf{o}^{\text{new}})=f(\mathbf{z}^{\text{new}})\)</span>. Without the assumption that <span class="math">\(f\)</span> can produce any value on the real line, we have to additionally restrict <span class="math">\(f_{z^{\text{new}}}\)</span> to only produce values in the range of <span class="math">\(f\)</span>, but this doesn't change the Theorem 1 result since <span class="math">\(f_{z^{\text{new}}}\)</span> is generally viewed as given, or fixed.</p>
+<p>Fourth, my above choice to set <span class="math">\(\mathbf{o}^{\text{new}}=\mathbf{1}_m\)</span> deviates from L&amp;L, who allow <span class="math">\(z'\)</span> to contain zeros. (Recall that my notation <span class="math">\(\mathbf{o}^{\text{new}}\)</span> is the analogue of <span class="math">\(z'\)</span>.) Accordingly, I've also omitted L&amp;L's "Missingness Property" from Theorem 1. Implicit in L&amp;L's assumption that <span class="math">\(z'\)</span> can contain zeros is the assumption that <span class="math">\(f\)</span> can handle missing values. However, the Missingness Property in L&amp;L Theorem 1 requires that no part of the decomposition of <span class="math">\(f(x)\)</span> be assigned to summary features <span class="math">\(x_i'\)</span> for which <span class="math">\(x_i'=0\)</span>. Thus, the zero-values in <span class="math">\(z'\)</span> (and hence <span class="math">\(\mathbf{o}^{\text{new}}\)</span>) are effectively ignored in L&amp;L Theorem 1. For this reason, we can adapt the above counterclaim to the case where <span class="math">\(\mathbf{o}^{\text{new}}\)</span> contains zeros by fixing the zero values of <span class="math">\(\mathbf{o}^{\text{new}}\)</span> and letting only the nonzero values vary. Let <span class="math">\(p=\sum_{i=1}^m\mathbf{o}^{\text{new}}_i\)</span>, and let <span class="math">\(d=m-p\)</span> be the number of zeros in <span class="math">\(\mathbf{o}^{\text{new}}\)</span>. Without loss of generality, let us first assume that all zero entries occupy the last <span class="math">\(d\)</span> elements of <span class="math">\(\mathbf{o}^{\text{new}}\)</span>. Let <span class="math">\(\mathbf{Z}_{\text{subset}}\in\mathbb{R}^p\)</span> represent the first <span class="math">\(p\)</span> (observed) inputs, and let <span class="math">\(f_{\text{subset}}(\mathbf{Z}_{\text{subset}})=f((\mathbf{Z}_{\text{subset}}, \text{NA},\dots,\text{NA}))\)</span> be the version of our prediction function <span class="math">\(f\)</span> that depends only on <span class="math">\(\mathbf{Z}_{\text{subset}}\)</span>. In this setting, replacing <span class="math">\(f\)</span> with <span class="math">\(f_{\text{subset}}\)</span> and replacing <span class="math">\(\mathbf{Z}\)</span> with <span class="math">\(\mathbf{Z}_{\text{subset}}\)</span> produces an equivalent problem of explaining the prediction <span class="math">\(f_{\text{subset}}((\mathbf{z}^{\text{new}}_1,\dots,\mathbf{z}^{\text{new}}_p))=f(\mathbf{z}^{\text{new}})\)</span>, but with inputs <span class="math">\((\mathbf{z}^{\text{new}}_1,\dots,\mathbf{z}^{\text{new}}_p)\)</span> that are fully uncensored.</p>
+<p>Finally, readers might note that Eq (<span class="math">\(\ref{shap-def}\)</span>), above, is different from that of L&amp;L Eq (8). We can relate these two equations by noting that</p>
+<div class="math">\begin{align*}
+\phi_i(f_{\mathbf{z}^{\text{new}}})
+=&amp;\frac{1}{m!}\sum_{\mathbf{r}\in\mathcal{R}_m}
+ f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)} + \delta^{(i)}\right)-f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)}\right)\\
+ %% =&amp;\frac{1}{m!}\sum_{\mathbf{r}\in\mathcal{R}_m} \left[
+ %% f_{\mathbf{z}^{\text{new}}}\left(\Delta^{(\mathbf{r},i)} + \delta^{(i)}\right)-f_{\mathbf{z}^{\text{new}}}\left(\left(\Delta^{(\mathbf{r},i)} + \delta^{(i)}\right) \setminus i \right) \right]\\
+%% =&amp;\frac{1}{m!} \sum_{\{\mathbf{o}\in \{0,1\}^m :\mathbf{o}_i=1\}}
+%% \left\{
+%% { \vphantom{\frac{a}{v}} |\mathbf{o}-1|!(m-|\mathbf{o}|)! }
+%% \right\} 
+%% \times
+%% \left[
+%%{  \vphantom{\frac{a}{v}} f_{\mathbf{z}^{\text{new}}}(\mathbf{o})-f_{\mathbf{z}^{\text{new}}}(\mathbf{o}\setminus i) }
+%%\right]\\
+=&amp;\frac{1}{m!} \sum_{\{\mathbf{o}\in \{0,1\}^m :\mathbf{o}_i=0\}}
+\left\{
+{ \vphantom{\frac{a}{v}} |\mathbf{o}|!(m-|\mathbf{o}|-1)! }
+\right\} 
+ \times
+\left[
+{ \vphantom{\frac{a}{v}} f_{\mathbf{z}^{\text{new}}}(\mathbf{o}+\delta^{(i)})-f_{\mathbf{z}^{\text{new}}}(\mathbf{o}) }
+\right],
+\end{align*}</div>
+<p>where the term in curly braces is the number of orderings in which the indices <span class="math">\(\{j\,:\,\mathbf{o}_j=1\}\)</span> occur first, followed by <span class="math">\(i\)</span>, followed by the remaining indices <span class="math">\(\{j\neq i\,:\,\mathbf{o}_j=0\}\)</span>. The remaining difference between the two formulas is due to a small typo in L&amp;L Eq (8), as noted in the authors' <a href="https://github.com/slundberg/shap/blob/master/docs/pdfs/SHAP_NIPS_2017_Errata.pdf" target="_blank">Errata document</a>.</p>
+<h2>Acknowledgments</h2>
+<p>Thanks very much to <a href="https://scottlundberg.com/" target="_blank">Scott Lundberg</a>, <a href="https://linkedin.com/in/beau-coker-7a5aa711a" target="_blank">Beau Coker</a> &amp; <a href="https://www.berkustun.com/" target="_blank">Berk Ustun</a> for their invaluable help in process of writing this comment.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:covPred">
+<p>These are completely hypothetical probabilities that an analyst might propose, and readers should not use these numbers to inform decisions about infection. I've based these predictions <em>very loosely</em> on the risk levels given by <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/acem.14009" target="_blank">Clemency et al. (2020)</a>, just to get a rough sense of the orders of magnitude.&#160;<a class="footnote-backref" href="#fnref:covPred" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:thirdcond">
+<p>A third condition from L&amp;L, "Missingness," is omitted here as it is made redundant by our simplifying assumption that <span class="math">\(\mathbf{o}_m=\mathbf{1}_m\)</span>. (<a href="#adv-notation">see Appendix 2</a>).&#160;<a class="footnote-backref" href="#fnref:thirdcond" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:eq1form">
+<p>L&amp;L present an algebraically equivalent version of this formula, as discussed in <a href="#adv-notation">in Appendix 2</a>.&#160;<a class="footnote-backref" href="#fnref:eq1form" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:shapname">
+<p>To disambiguate "SHapley Values for Additive exPlanations" (SHAP, L&amp;L) from the "Shapley value" concept that inspired it, I'll refer to the latter as the "Shapley value framework."&#160;<a class="footnote-backref" href="#fnref:shapname" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:mono">
+<p><a href="https://link.springer.com/content/pdf/10.1007/BF01769885.pdf" target="_blank">Young (1985)</a> showed that the Monotonicity condition can be used to replace two previously established conditions known as "Null Player" and "Linearity." This is discussed in the <a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">L&amp;L supplement</a>.&#160;<a class="footnote-backref" href="#fnref:mono" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+	<div class="comments">
+	<!-- <h2>Comments !</h2> -->
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "SHAP-Symmetry.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'https://aaronjfisher.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		 
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+            <a href="https://aaronjfisher.github.io/feeds/all.rss.xml" rel="alternate"><img src="/theme/images/icons/feed-18px.png" alt="rss feed"/>RSS</a>.  
+          Proudly powered by <a href="http://docs.getpelican.com">pelican</a>. Theme based on <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>. 
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	  <script>
+		var _gaq=[['_setAccount','UA-49475556-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	  </script>
+
+</body>
+</html>
