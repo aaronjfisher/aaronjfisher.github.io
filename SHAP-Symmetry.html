@@ -51,7 +51,7 @@
 <p class="tags">tagged <a href="https://aaronjfisher.github.io/tag/transparency.html">transparency</a>, <a href="https://aaronjfisher.github.io/tag/interpretability.html">interpretability</a>, <a href="https://aaronjfisher.github.io/tag/explainability.html">explainability</a></p></div>		
 		<!-- date!!! -->
 
-<!-- Tweet:
+<!-- Tweet: 
 
 1   
 While rereading the SHAP 2017 NeurIPS paper recently, I noticed error in Thm 1. 
@@ -120,7 +120,7 @@ Roughly, L&L Thm 1 says that the SHAP solution is unique, even if we allow prior
 
 
 10
-L&L implitly assume that feature names don't matter in their proof, but feature names do matter if we incorperate prior knowledge into the explanation process. 
+L&L implitly assume that feature names don't matter in their proof, but feature names do matter if we incorporate prior knowledge into the explanation process. 
 
 
 
@@ -130,7 +130,7 @@ In order for SHAP to be a unique solution, we need to add a Symmetry condition (
 
 
 12
-Adding Symmetry is reasonable in generic scenarios lacking prior knowledge, but might not be desireable if we have relevant prior knowledge about the inputs, and how they tend to contribute information.
+Adding Symmetry is reasonable in generic scenarios lacking prior knowledge, but might not be desirable if we have relevant prior knowledge about the inputs, and how they tend to contribute information.
 
 
 
@@ -146,7 +146,6 @@ Adding Symmetry is reasonable in generic scenarios lacking prior knowledge, but 
 <p>In the next section I'll introduce the SHAP procedure with a slightly more complex example of COVID-19 screening based on three hypothetical risk factors. I'll then introduce more detailed notation in order to discuss L&amp;L Theorem 1.</p>
 <p><em>Note: I reached out to the SHAP paper's authors and had several helpful discussions while writing this comment.</em></p>
 <!-- In the process of discussing Theorem 1, I'll also outline an interpretation of SHAP that relies more on statistical terminology and less on game theory terminology. -->
-
 <!-- In the process of discussing Theorem 1, I'll also present a slow walk-through of some of the notation in L&L. -->
 
 <h1><a name="basic-notation"></a> Introducing SHAP with a hypothetical example of predicting COVID-19 status</h1>
@@ -233,7 +232,7 @@ Given a partial information function <span class="math">\(f_{z^{\text{new}}}:\{0
 <!-- In the next section, we'll see a set of solutions that all satsify the two conditions in L&L Theorem 1. This set comes from applying different weightings to the input orderings.
  -->
 
-<!--
+<!-- 
 
 # <a name="shap-stat"></a> An intuition for SHAP in the language of stats
 
@@ -266,15 +265,15 @@ But, again, any weighting scheme can be used while still maintaining the conditi
 <li>(Monotonicity) if the task assigned to the team changes in such a way that the marginal contribution of the <span class="math">\(i^{th}\)</span> member to any subteam does not decrease, then the payout to the <span class="math">\(i^{th}\)</span> member will not decrease;<sup id="fnref:mono"><a class="footnote-ref" href="#fn:mono">5</a></sup></li>
 <li>(Symmetry) any 2 members who are equivalent, in that they make the same marginal contributions to any subteam, are payed equally. </li>
 </ol>
-<p><a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">L&amp;L, 2017</a> showed that the Shapley value framework can also be applied to explain a black-box model's predictions. L&amp;L interpret the set of input features as team members producing a prediction, and use the Shapley value framework to decompose this prediction into components associated with each of the inputs. In this context, <em>Efficiency</em> can be written as <em>Local Accuracy</em>; <em>Monotonicity</em> can be written as <em>Consistency</em> (L&amp;L Theorem 1); and <em>Symmetry</em> can be written as saying that two inputs (<span class="math">\(i,j\)</span>) must be assigned the same decomposition value if they make the same marginal contribution to any subset of other inputs.
-<!-- <div class="math">\begin{equation}
+<p><a href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions" target="_blank">L&amp;L, 2017</a> showed that the Shapley value framework can also be applied to explain a black-box model's predictions. L&amp;L interpret the set of input features as team members producing a prediction, and use the Shapley value framework to decompose this prediction into components associated with each of the inputs. In this context, <em>Efficiency</em> can be written as <em>Local Accuracy</em>; <em>Monotonicity</em> can be written as <em>Consistency</em> (L&amp;L Theorem 1); and <em>Symmetry</em> can be written as saying that two inputs (<span class="math">\(i,j\)</span>) must be assigned the same decomposition value if they make the same marginal contribution to any subset of other inputs.</p>
+<!-- \begin{equation}
 \label{Symmetry}
 \max_{ \left\{ 
 i,j\in\{1,\dots,m\}, \, \mathbf{o}\in\{0,1\}^m\,:\,\mathbf{o}_i=\mathbf{o}_j=0
 \right\} }
 \left|f_{z^{\text{new}}}(\mathbf{o}+\delta_i) - f_{z^{\text{new}}}(\mathbf{o}+\delta_j) \right| = 0 \implies \phi_i(f_{\mathbf{z}^{\text{new}}})=\phi_j(f_{\mathbf{z}^{\text{new}}}). 
-\end{equation}</div> -->
-That is,  if 
+\end{equation} -->
+<p>That is,  if 
 <span class="math">\(f_{z^{\text{new}}}(\mathbf{o}+\delta_i) = f_{z^{\text{new}}}(\mathbf{o}+\delta_j)\)</span> 
 for all 
 <span class="math">\(\mathbf{o}\in\{0,1\}^m\)</span> 
@@ -292,15 +291,11 @@ or partial dependence plots
 These alternative methods study how a model's behavior changes when <em>only</em> the variable of interest is altered or censored. In contrast, SHAP studies how a model's predictions change when <em>all variables are censored sequentially</em> (or, equivalently, when they are measured sequentially). This conceptual distinction leads to the Local Accuracy property of SHAP,<!-- [^addAcc] --> a property that is not shared by the other methods mentioned above.</p>
 <!-- [^addAcc]: The "Local Accuracy" property is sometimes referred to as "Additivity," (see [Theorem 1](#thm1) and [the discussion section](#background)).
  -->
-
-<!-- gradient-based methods (see Sundararajan et al. (2017), Koh Liang?) ([https://arxiv.org/pdf/1910.13413.pdf){:target="_blank"}),  -->
-
 <h2><a name="discussion"></a> General discussion, and remaining open questions</h2>
 <p>We've seen that the conditions in L&amp;L Theorem 1 are maintained even after reweighting the SHAP formula (Eq (<span class="math">\(\ref{shap-def}\)</span>)) using any weighting scheme, or probability distribution, over input feature orderings. This means that in order for the SHAP decomposition to be uniquely defined, a researcher must choose not only a function <span class="math">\(f_{z^{\text{new}}}\)</span> to assign values to subsets of inputs (<a href="https://arxiv.org/abs/1908.08474" target="_blank">Sundararajan &amp; Najmi, 2019</a>), but also a weighting function <span class="math">\(w\)</span> over the order in which inputs are measured. </p>
 <p>Requiring a Symmetry condition collapses this choice to uniform weights (Eq (<span class="math">\(\ref{shap-def}\)</span>)), but it is not obvious that uniform weights are ideal when external knowledge is available. <a href="https://arxiv.org/abs/1910.06358" target="_blank">Frye et al. (2019)</a> make a similar point about choosing a distribution over orderings, and argue that such a choice should reflect known causal structure. Alternatively, the order might reflect how expensive each feature is to measure (see also <a href="http://proceedings.mlr.press/v54/lakkaraju17a.html" target="_blank">Lakkaraju &amp; Rudin, 2017</a>). </p>
 <p>That said, there are still scenarios where equal weights can be a reasonable default choice. For example, when debugging a model it can be useful to explore a variety of explanatory methods, including SHAP (with equal weights or unequal weights), partial dependence plots, permutation importance, and more. Each method provides a new chance to understand when and why the model performs poorly.</p>
 <!-- While we've shown here that any choice of $P$ leads to a solution to L&L Theorem 1, via Eq ($\ref{dist-def}$),  -->
-
 <p>One potential future question is whether or not all solutions to L&amp;L Theorem 1 take the form of Eq (<span class="math">\(\ref{dist-def}\)</span>). Another open question is whether there are variations of the Symmetry condition that imply different choices for <span class="math">\(w\)</span>. On the other hand, it might be more straightforward for a researcher to choose a partial information function <span class="math">\(f_{z^{\text{new}}}\)</span> and weighting function <span class="math">\(w\)</span>, and then define the decomposition method as a function of <span class="math">\(f_{z^{\text{new}}}\)</span> &amp; <span class="math">\(w\)</span> using Eq (<span class="math">\(\ref{dist-def}\)</span>). That is, it might be easier for researchers to choose a weighting function <span class="math">\(w\)</span> than to identify a variation of the Symmetry requirement that uniquely determines <span class="math">\(w\)</span>. </p>
 <hr>
 <!-- 
@@ -389,6 +384,7 @@ for all <span class="math">\(\mathbf{o}\in\{0,1\}^m\)</span>. We can apply the a
 <p>where the term in curly braces is the number of orderings in which the indices <span class="math">\(\{j\,:\,\mathbf{o}_j=1\}\)</span> occur first, followed by <span class="math">\(i\)</span>, followed by the remaining indices <span class="math">\(\{j\neq i\,:\,\mathbf{o}_j=0\}\)</span>. The remaining difference between the two formulas is due to a small typo in L&amp;L Eq (8), as noted in the authors' <a href="https://github.com/slundberg/shap/blob/master/docs/pdfs/SHAP_NIPS_2017_Errata.pdf" target="_blank">Errata document</a>.</p>
 <h2>Acknowledgments</h2>
 <p>Thanks very much to <a href="https://scottlundberg.com/" target="_blank">Scott Lundberg</a>, <a href="https://linkedin.com/in/beau-coker-7a5aa711a" target="_blank">Beau Coker</a> &amp; <a href="https://www.berkustun.com/" target="_blank">Berk Ustun</a> for their invaluable help in process of writing this comment.</p>
+<!-- gradient-based methods (see Sundararajan et al. (2017), Koh Liang?) ([https://arxiv.org/pdf/1910.13413.pdf){:target="_blank"}),  -->
 <div class="footnote">
 <hr>
 <ol>
