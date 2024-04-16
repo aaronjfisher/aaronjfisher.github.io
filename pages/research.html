@@ -40,8 +40,11 @@
 		  <div role="main" class="content">
 
 <h1>Research</h1>
-<p>For more information, please see my <a href="https://scholar.google.com/citations?user=Ubjcc-IAAAAJ&amp;hl=en" target="_blank">google scholar page</a>.</p>
-<p>I also try to track my reviewer service with <a href="https://www.webofscience.com/wos/author/record/3433401" target="_blank">Web of Science</a> (see Peer Review tab).</p>
+<p>This page summarizes some of my larger research projects. For a complete list of papers, please see my <a href="https://scholar.google.com/citations?user=Ubjcc-IAAAAJ&amp;hl=en" target="_blank">google scholar page</a>.</p>
+<!-- I also try to track my reviewer service through [Web of Science](https://publons.com/wos-op/researcher/4167534/aaron-fisher/){:target="_blank"}. -->
+
+<h2>Identifying subgroups where causal effects are especially high or low</h2>
+<p>Estimates of conditional average treatment effects allow interventions to be tailored to individuals. A well-known challenge in this field is that estimates can be unstable when the treatment groups are imbalanced. <a href="https://arxiv.org/abs/2307.09700">My research</a> highlights that inverse-variance weights mitigate this problem, producing estimators that attain “oracle-efficiency” under the weakest conditions currently available. This work also sheds light on the performance of the popular “R-Learning” method, which uses a form of inverse variance weighting implicitly.</p>
 <h2>Interpretability for machine learning models</h2>
 <p>Uninterpretable, black-box prediction models can provoke distrust, and their predictions can be difficult to combine with supplementary information in order to make decisions. In work with <a href="https://users.cs.duke.edu/~cynthia/" target="_blank">Cynthia Rudin</a> and <a href="https://sites.sph.harvard.edu/francesca-dominici/" target="_blank">Francesca Dominici</a>, we pointed out that U-statistics can be used to estimate well-known  variable importance measures, which describe how much a <em>given</em> black-box model uses different covariates to gain prediction accuracy (Breiman <a href="https://link.springer.com/article/10.1023/A:1010933404324" target="_blank">2001a</a>, <a href="https://projecteuclid.org/euclid.ss/1009213726" target=_blank">2001b</a>). We also developed a novel method for estimating how much <em>unknown proprietary</em> models rely on different covariates. Our method optimizes to find several approximations of the proprietary model that function as differently as possible, in terms of how much they rely on each covariate. We applied our method to study the dominant predictive factors in the criminal recidivism model COMPAS. </p>
 <ul>
@@ -75,33 +78,6 @@ Influence Functions</li>
 <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/27616801" target="_blank">JASA T&amp;M paper</a> </li>
 <li><a href="https://github.com/aaronjfisher/bootSVD" target="_blank">bootSVD R package</a> <img alt="alt text" src="https://cranlogs.r-pkg.org/badges/grand-total/bootSVD" title="download count"> for easy implementation of the bootstrap procedure</li>
 <li><a href="https://github.com/aaronjfisher/ggBrain" target="_blank">ggBrain R package</a> for creating brain image figures</li>
-</ul>
-<p></br></br></p>
-<h2>How the effects of interventions vary across individuals</h2>
-<p>My previous work on this topic focused on adaptive clinical trials that allow for the possibility of approving an intervention only in a certain subgroup. My ongoing work studies how much variability remains that cannot be mitigated by tailoring the intervention by subgroup. This current work is motivated by studies of air pollution, where many individuals face the same exposure, but some individuals may experience greater harm as a result.</p>
-<ul>
-<li><a href="https://www.tandfonline.com/doi/abs/10.1080/10543406.2018.1489401" target="_blank">Journal of Biopharmaceutical Statistics paper</a>
-</br></br></li>
-</ul>
-<h2>Evidence based data analysis -- studying statistical methodology in practice</h2>
-<p>Much statistical research focuses on the sampling variability of estimators under different theoretical scenarios. However, little is known on the sampling variability that is introduced when human investigators implement analysis methods differently. Knowledge on this human variability could form a key aspect of recommending statistical methods to investigators, and lead to improved reproducibility. <a href="https://peerj.com/articles/589/" target="_blank">In work</a> with <a href="http://jtleek.com/">Jeff Leek</a>, <a href="http://www.cvmbs.colostate.edu/DirectorySearch/Search/MemberProfile/cvmbs/35248/Anderson/Georgiana" target="_blank">G. Brooke Anderson</a>, and <a href="http://www.biostat.jhsph.edu/~rpeng/" target="_blank">Roger Peng</a>, we have proposed the concept of evidence based data analysis: the scientific study of how statistical methods perform in practice, when they are implemented, sometimes imperfectly, by analysts of different levels of statistical training.</p>
-<p>In our work, we specifically looked at the common statistical practice of using exploratory data analysis (EDA) to identify significant predictors to include in a model. We conducted a survey in a statistics massive open online course, and asked students to rate the relationships shown in scatterplots as either significant or non-significant at the 0.05 level. Initial rating accuracy was poor, but in some cases improved with practice. Our work sheds light on how fostering statistical literacy can increase the clarity of communication in science, on the effectiveness of EDA for variable selection, and on the extent of damage caused when analysts do not correct for multiple hypotheses that are tested informally in the EDA process.</p>
-<p align="center">
-<img src="../images/peerj_figure1.jpg" alt="peerJFigure" style="width: 90%;"/>
-</br><i>Accuracy with which users can classify relationships that are truly significant (blue) and that are non-significant (red) on their first attempt of the survey. Each row denotes a different presentation style for the scatterplot shown (e.g. whether Lowess trend lines were added). See the <a href="https://peerj.com/articles/589/" target="_blank">full paper</a> for more details.</i>
-</p>
-
-<ul>
-<li><a href="https://peerj.com/articles/589/" target="_blank">PeerJ Paper</a></li>
-<li><a href="../pdfs/2015_jsm_poster_eda.pdf" target="_blank">2015 JSM Poster</a></li>
-</ul>
-<p></br></br></p>
-<h2>Predicting biopsy results and latent health states for patients with low-risk prostate cancer</h2>
-<p>For patients with low-risk prostate cancer, prostate biopsies are a highly invasive aspect of active surveillance. I worked with <a href="http://www.rycoley.com/" target="_blank">Yates Coley</a> &amp; <a href="http://www.jhsph.edu/faculty/directory/profile/3859/scott-zeger" target="_blank">Scott Zeger</a> on a <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12577" target="_blank">Bayesian hierarchical model</a> to predict a patient's latent cancer state based on data from previous prostate biopsies and prostate-specific antigen (PSA) measurements. The goal of this modeling approach is to help guide treatment decisions, and to reduce the number of unnecessary biopsies and prostatectomies.</p>
-<p>My role in this project was to apply a method for <a href="http://arxiv.org/abs/1510.08802" target="_blank">fast latent state estimation</a> based on new patient data. This would allow doctors to give patients in-clinic risk estimates, without having to refit the entire model with batch MCMC. The proposed method (based on Importance Sampling) does not require novel Bayesian techniques, but it does address one of the obstacles to applying Bayesian Hierarchical models in clinical settings.</p>
-<ul>
-<li><a href="http://arxiv.org/abs/1510.08802" target="_blank">Technical Report on arXiv</a></li>
-<li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12577" target="_blank">Biometrics paper</a></li>
 </ul>
 <p></br></br></p>		
 
